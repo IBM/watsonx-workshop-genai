@@ -1,0 +1,1108 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../lab-tuning-generative-ai/">
+      
+      
+      
+      <link rel="icon" href="../images/watsonx-logo.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.10">
+    
+    
+      
+        <title>Lab 4. Virtual Assistants with RAG - watsonx Generative AI Workshop</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.7e359304.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:300,300i,400,400i,700,700i%7CIBM+Plex+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"IBM Plex Sans";--md-code-font:"IBM Plex Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#llm-powered-conversational-search" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="watsonx Generative AI Workshop" class="md-header__button md-logo" aria-label="watsonx Generative AI Workshop" data-md-component="logo">
+      
+  <img src="../images/IBM_logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            watsonx Generative AI Workshop
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Lab 4. Virtual Assistants with RAG
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="watsonx Generative AI Workshop" class="md-nav__button md-logo" aria-label="watsonx Generative AI Workshop" data-md-component="logo">
+      
+  <img src="../images/IBM_logo.png" alt="logo">
+
+    </a>
+    watsonx Generative AI Workshop
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../prompt-engineering-exercises/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 1. Prompt Engineering
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../prompt-engineering-exercise-answers/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 1 Answers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lab-tuning-generative-ai/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 2. Tuning Gen AI
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Lab 4. Virtual Assistants with RAG
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Lab 4. Virtual Assistants with RAG
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#in-this-session" class="md-nav__link">
+    <span class="md-ellipsis">
+      In this session
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-conversational-search" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is conversational search?
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What is conversational search?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#process-of-conversational-search" class="md-nav__link">
+    <span class="md-ellipsis">
+      Process of conversational search
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#advantages-of-conversational-search" class="md-nav__link">
+    <span class="md-ellipsis">
+      Advantages of conversational search
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#proposed-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      Proposed Architecture
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#llms-in-conversational-search" class="md-nav__link">
+    <span class="md-ellipsis">
+      LLMs in conversational search
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#demonstrating-conversational-search" class="md-nav__link">
+    <span class="md-ellipsis">
+      Demonstrating conversational search
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#search-tool" class="md-nav__link">
+    <span class="md-ellipsis">
+      Search tool
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-connecting-to-the-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      [1] Connecting to the environment
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-create-a-watsonxai-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      [2] Create a watsonx.ai project
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-load-data-into-watsonx-discovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      [3] Load data into watsonx Discovery
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-set-up-the-assistant" class="md-nav__link">
+    <span class="md-ellipsis">
+      [4] Set up the assistant
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-adding-the-watsonx-discovery-semantical-search-extension" class="md-nav__link">
+    <span class="md-ellipsis">
+      [5] Adding the watsonx Discovery Semantical Search Extension
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-adding-the-watsonxai-custom-extension" class="md-nav__link">
+    <span class="md-ellipsis">
+      [6] Adding the watsonx.ai custom extension
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-upload-and-configure-the-watsonx-actions" class="md-nav__link">
+    <span class="md-ellipsis">
+      [6] Upload and configure the watsonx actions
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#in-this-session" class="md-nav__link">
+    <span class="md-ellipsis">
+      In this session
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-conversational-search" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is conversational search?
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What is conversational search?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#process-of-conversational-search" class="md-nav__link">
+    <span class="md-ellipsis">
+      Process of conversational search
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#advantages-of-conversational-search" class="md-nav__link">
+    <span class="md-ellipsis">
+      Advantages of conversational search
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#proposed-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      Proposed Architecture
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#llms-in-conversational-search" class="md-nav__link">
+    <span class="md-ellipsis">
+      LLMs in conversational search
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#demonstrating-conversational-search" class="md-nav__link">
+    <span class="md-ellipsis">
+      Demonstrating conversational search
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#search-tool" class="md-nav__link">
+    <span class="md-ellipsis">
+      Search tool
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-connecting-to-the-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      [1] Connecting to the environment
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-create-a-watsonxai-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      [2] Create a watsonx.ai project
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-load-data-into-watsonx-discovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      [3] Load data into watsonx Discovery
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-set-up-the-assistant" class="md-nav__link">
+    <span class="md-ellipsis">
+      [4] Set up the assistant
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-adding-the-watsonx-discovery-semantical-search-extension" class="md-nav__link">
+    <span class="md-ellipsis">
+      [5] Adding the watsonx Discovery Semantical Search Extension
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-adding-the-watsonxai-custom-extension" class="md-nav__link">
+    <span class="md-ellipsis">
+      [6] Adding the watsonx.ai custom extension
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-upload-and-configure-the-watsonx-actions" class="md-nav__link">
+    <span class="md-ellipsis">
+      [6] Upload and configure the watsonx actions
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<div><h1 id="llm-powered-conversational-search">LLM-powered Conversational Search</h1>
+<h3 id="in-this-session">In this session</h3>
+<p>Learn about IBM watsonx Assistant’s large language model (LLM)-powered conversational search: what it is, how it works, how to set it up, and how to use it.</p>
+<h2 id="what-is-conversational-search">What is conversational search?</h2>
+<p>Welcome back to the watsonx Assistant hands-on lab! During this lab, we will focus on conversational search, a LLM-powered feature that allows your virtual assistant to answer questions conversationally on a wide range of topics.</p>
+<h3 id="process-of-conversational-search">Process of conversational search</h3>
+<p>Conversational search is a feature in watsonx Assistant that allows a virtual assistant to search a knowledge base for information relevant to a question and use the relevant information to generate a conversational answer to the question. This feature is an adaptation of retrieval augmented generation (RAG), a standard technical approach to improving a LLM’s ability to answer questions accurately.</p>
+<p>When it comes to enterprise use cases, where specialized and customer-specific information is involved, general purpose language models fall short. Fine-tuning these models with newcorpora can be expensive and time-consuming. The lab uses the RAG technique to address this challenge.</p>
+<p>Conversational search involves several components: conversational AI, search, and a fine-tuned or prompt-engineered LLM.</p>
+<p>Everyone’s heard of ChatGPT, and you can ask it anything – for example, what is a session variable?. It queries its large language model and generates a response:</p>
+<p><img alt="What is a session variable?" src="../images/what_is_a_session_variable.png"></p>
+<p>The answer is generic and demonstrates the shortcomings of the typical LLM. It is not taking the answer from a trusted and accurate source of truth.</p>
+<p>In this exercise, watsonx Assistant, by integrating with watsonx, will search a knowledge base for information to find an answer to a question and use that relevant information to generate a conversational answer to the query. As mentioned above, this is an adaptation of RAG.</p>
+<p>Let’s walk through the order of operations in conversational search:</p>
+<ol>
+<li>
+<p>First, the end user asks the virtual assistant a question.</p>
+<ul>
+<li>
+<p>The virtual assistant uses its natural language understanding (NLU) model to determine whether it recognizes the question and whether it can answer it using one of its actions for which it has been trained. For example, a bank’s assistant is usually trained on answering a question such as, help me locate the nearest branch.</p>
+</li>
+<li>
+<p>If the virtual assistant recognizes the question, it answers it using the appropriate action. Conversational search is not needed, and watsonx Assistant did not need to query the knowledge base nor call the LLM interation.</p>
+</li>
+<li>
+<p>However, If the assistant does not recognize the question, it will go to conversational search.</p>
+</li>
+</ul>
+<p><img alt="" src="../images/search-process-diagram.png"></p>
+</li>
+<li>
+<p>With conversational search, the virtual assistant sends the end user’s question, also known as a query or request, to a search tool, in this exercise watsonx Discovery. Watsonx Discovery has read and processed all relevant corporate documents.</p>
+</li>
+<li>
+<p>The search tool (watsonx Discovery) will then search its content and produce search results in response to the question.</p>
+</li>
+<li>
+<p>The search tool passes these search results back to the virtual assistant in a list.</p>
+</li>
+<li>
+<p>At this point, watsonx Assistant could display the results back to the user. However, they would not resemble natural speech; they would look like a summarized answer based on a search. Helpful – certainly – but not natural.</p>
+</li>
+<li>
+<p>Therefore, watsonx Assistant sends the question and the list of search results to watsonx.ai, which invokes a large language model (LLM). In some implementations of conversational search, a LLM re-ranks the search results. It may reorder or disregard some of the search results according to how relevant and useful it thinks the search results are to the question. For example, a LLM might decrease the ranking of a search result if it is from a document that has not been updated recently, indicating the information may be out of date. This capability is often called a “neural re-ranker.”</p>
+</li>
+<li>
+<p>The LLM generates an answer to the question using the information in the search results, and the LLM passes this answer back to watsonx Assistant.</p>
+</li>
+<li>
+<p>The virtual assistant presents this conversational answer to the end user.</p>
+</li>
+</ol>
+<h3 id="advantages-of-conversational-search">Advantages of conversational search</h3>
+<p><strong>Answer traceability:</strong> In some implementations of conversational search, the virtual assistant may show the end user the search results that the LLM used to generate the answer. This allows the end user to trace the answer back to its source and confirm for themselves its accuracy. This capability is often called “answer traceability.”</p>
+<p><strong>Custom passage curation:</strong> In other implementations of conversational search, the virtual assistant also shows the end user snippets of the search results that the LLM used to generate the answer. These snippets might be direct quotes or 1-2 sentence summaries of the relevant information in each search result. This allows the end user to understand exactly what the
+LLM pulled out from the search result to craft its answer. This capability is often called “custom passage curation.”</p>
+<p>Conversational search is much more than document summarization or simple search. It includes the entire process of recognition, search, and answer generation; sometimes also including a neural re-ranker, answer traceability, and custom passage curation. The value-add of watsonx Assistant in conversational search is its ability to orchestrate and
+connect every component of conversational search using its NLU model, no-code actions, OOTB connectors, and custom extensions.</p>
+<h3 id="proposed-architecture">Proposed Architecture</h3>
+<p><img alt="" src="../images/proposed-architecture.png"></p>
+<h3 id="llms-in-conversational-search">LLMs in conversational search</h3>
+<p>Now that we’ve established that this process uses LLMs – what specific LLMs are used in conversational search?</p>
+<p>IBM watsonx Assistant uses large language models trained and deployed in watsonx for a variety of use cases, including conversational search. Assistant customizes watsonx LLMs for conversational search such that, given a question and a list of search results, they know how to re-rank the search results and then generate an answer from that list of search results. The watsonx Assistant team is working with IBM Research and the watsonx team to develop a custom, fine-tuned, and prompt-engineered large language model called Content-Grounded Assistant (CoGA) that specializes in generating answers from search results. CoGA is available in watsonx tech preview today. It will be available in watsonx later in Q3 2023.</p>
+<p>In the meantime, while the watsonx Assistant team works to make CoGA available on watsonx, the watsonx Assistant team recommends using prompt-engineered FLAN-UL2-20b, an open- source model, to generate answers from search results. FLAN-UL2-20b is available in watsonx today.</p>
+<p>Non-watsonx LLMs can also be fine-tuned or prompt-engineered to perform conversational search. These LLMs can be integrated with watsonx Assistant via extensions. This pattern may be preferable to clients who train their own LLMs in-house.</p>
+<p>The value-add of watsonx in conversational search is its customized large language model, especially CoGA, designed and customized by the watsonx Assistant, IBM Research, and watsonx teams to perform well for conversational search.</p>
+<h3 id="demonstrating-conversational-search">Demonstrating conversational search</h3>
+<p>Following are the options available to IBMers and IBM business partners that would like to demo conversational search:</p>
+<p><img alt="" src="../images/demonstrating-conversational-search-1.png"></p>
+<h3 id="search-tool">Search tool</h3>
+<p>In today's lab we will explore the following method for search and retrieval:</p>
+<p><strong>watsonx Discovery:</strong> This corresponds to <strong>semantic search</strong> method in a RAG architecture. This implementation will make use of an Elasticsearch instance as knowledge base, that has already been deployed for the purpose of this lab.</p>
+<ul>
+<li>
+<p>Semantic search, the “modern” approach, is the process finding an answer to a question by means of a context-based method.</p>
+</li>
+<li>
+<p>Helps you find data based on the intent and contextual meaning of a search query, instead of a match on query terms.</p>
+</li>
+<li>
+<p>The semantic search approach requires us to teach machines to understand and process the meaning of text.</p>
+</li>
+<li>
+<p>This option requires to represent text passages as vectors, known as embeddings.</p>
+</li>
+<li>
+<p>IBM watsonx Discovery makes use of a semantic search method for the search and retrieval phase of the RAG architecture.</p>
+</li>
+</ul>
+<h2 id="1-connecting-to-the-environment">[1] Connecting to the environment</h2>
+<ol>
+<li>
+<p>Open the watsonx.ai console in <a href="https://dataplatform.cloud.ibm.com/wx">https://dataplatform.cloud.ibm.com/wx</a></p>
+</li>
+<li>
+<p>Make sure your account is <strong>itz-watsonx</strong> and the Region is <strong>Dallas</strong>.</p>
+<p><img alt="" src="../images/region-and-account.png"></p>
+</li>
+</ol>
+<h2 id="2-create-a-watsonxai-project">[2] Create a watsonx.ai project</h2>
+<p>IBM watsonx.ai is an enterprise-ready AI and data platform designed to multiply the impact of AI across a client’s business. It provides an API for interacting with generative language models. In this step, you will create a watsonx project, which will later allow you to connect watsonx Assistant to the watsonx API.</p>
+<p>First, navigate to the watson.ai portal’s main page. Then, create a new project by clicking the <strong>+</strong> button under Projects.</p>
+<p><img alt="" src="../images/watsonx_ai_create_project-1.png"></p>
+<p>On the New project screen,
+1. Enter a Name that is meaningful to you.
+2. Optionally, enter a Description.
+3. Select the Object storage service you created in a previous step.
+4. Click Create.</p>
+<p><img alt="" src="../images/watsonx_ai_create_project-2.png"></p>
+<p>Next, the Overview tab of your new watsonx project screen is shown.</p>
+<p>You will need the watsonx project ID to set up the action that calls the watsonx custom extension in Assistant later. To get the watsonx project ID, select the <strong>Manage</strong> tab, then click copy</p>
+<p><img alt="" src="../images/watsonx_ai_create_project-3.png">
+<img alt="" src="../images/watsonx_ai_create_project-4.png"></p>
+<p>Save this project ID in a notepad for now, as you will need it shortly.</p>
+<p>Next, you will link the Watson Machine Learning service instance you created earlier to this new watsonx project. To do this, select <strong>Services &amp; integrations</strong> and click <strong>Associate service</strong>.</p>
+<p><img alt="" src="../images/watsonx_ai_create_project-5.png">
+<img alt="" src="../images/watsonx_ai_create_project-6.png"></p>
+<p>On the next screen, select the Watson Machine Learning instance that was deployed for the purpose of this demo and click Associate.</p>
+<p><img alt="" src="../images/watsonx_ai_create_project-7.png"></p>
+<p>Setting up your watsonx extension in Assistant will also require an API key from your IBM Cloud account. To get the API key, in a new browser tab, navigate to <a href="https://cloud.ibm.com/iam/apikeys">Manage access and users-API Keys</a> in IBM Cloud, which will take you to the following screen. Then, click Create.</p>
+<p><img alt="" src="../images/api_key_creation-1.png"></p>
+<p>On the popup Create IBM Cloud API key screen, enter a Name and Description meaningful to you, then click Create.</p>
+<p><img alt="" src="../images/api_key_creation-2.png"></p>
+<p>When you see the notification API key successfully created, click Copy.</p>
+<p><img alt="" src="../images/api_key_creation-3.png"></p>
+<h2 id="3-load-data-into-watsonx-discovery">[3] Load data into watsonx Discovery</h2>
+<p>Up until now, Watson Discovery was the service used for the creation of the Corporate Knowledge Base and the “Search and Retrieval” phase of the conversational search integration. If you recall from the theory part of this course, this method corresponds to lexical search, since we are searching for lexical similarities in the stored documents.</p>
+<p>In this part of the laboratory, we want to make use of sematic search (instead of lexical) by connecting our current virtual agent with a vectorial database and retrieving the results based on the context and similarity of the passages instead of the traditional method used by Watson Discovery.</p>
+<p>For this reason, we are going to make use of the OpenAPI functionality to build our custom extension towards an ElasticSearch model. This model is known as ELSERv2 and has already been deployed to in an Elasticsearch service. In order to see where this ElasticSearch model is, open Elastic <a href="https://elasticsearch-kibana-elastic.apps.65e9b74cf3e1220011745c89.cloud.techzone.ibm.com/app/home#/">URL</a> in a browser, authenticate with the following credentials:</p>
+<p>→   Username: elastic</p>
+<p>→   Password: J3723QrU9lX7Eld2E99NRT5D</p>
+<p>Then, go to <strong>Machine Learning</strong> and click on <strong>Trained Models</strong>.</p>
+<p><img alt="" src="../images/es-trained-models-1.png"></p>
+<p><img alt="" src="../images/es-trained-models-2.png"></p>
+<p><img alt="" src="../images/es-trained-models-3.png"></p>
+<p>The ELSER Model that has been deployed will be the component in the RAG architecture in charge of transforming the text passages (as well as the text query) into embeddings, for its use in semantic search. ELSER is an out-of-domain model which means it does not require fine-tuning on your own data, making it adaptable for various use cases out of the box. For more information, please refer to this <a href="https://www.elastic.co/guide/en/machine-learning/current/ml-nlp-elser.html">link</a>. Additionally, ElasticSearch has the ability to integrate with third-party or proprietary models. For the full list of Elastic supported models refer to this <a href="https://www.elastic.co/guide/en/machine-learning/current/ml-nlp-model-ref.html">link</a>.</p>
+<p><strong>Download the following file</strong>:</p>
+<ul>
+<li><a href="../assets/wa_docs_100.tsv">wa_docs_100.tsv</a></li>
+</ul>
+<p>Now we are going to load data into the Elasticsearch service. In order to do so go from the ElasticSearch main page to <strong>Machine Learning</strong>. Click on the section <strong>Data Vizualizer</strong>, then click on <strong>File</strong>. Click on <strong>“Select or drag and drop a File”</strong> and select the <strong>wa_docs_100.tsv</strong> file you just downloaded. The file contains 100 passages of watsonx Assistant documentation. There are three columns in this TSV file, title, section_title and text. The columns are extracted from the original documents. Specifically, each text value is a small chunk of text split from the original document.</p>
+<p><img alt="" src="../images/es-file-upload-1.png"></p>
+<p><img alt="" src="../images/es-file-upload-2.png"></p>
+<p>Now, click on <strong>Override settings</strong> and then check <strong>Has header</strong> row checkbox because the example dataset has header row. Then, click close and import the data to a new Elasticsearch index and name it wa-docs-&lt;name&gt;, where &lt;name&gt; corresponds to your first name.</p>
+<p><img alt="" src="../images/es-override-settings-1.png"></p>
+<p><img alt="" src="../images/es-override-settings-2.png"></p>
+<p>We have the passages uploaded into elastic in the form of an index. However, if we want to use the semantic search framework, we need to transform the text passages into vector representation. For this reason, we create an index with mappings for ELSER output.  Execute from the bastion machine, that has been deployed for the purpose of the lab, the command to set as environment variables the URL, username and password.</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>Note that you can copy the commands in this page by clicking the copy button in each code box:</p>
+<p><img alt="" src="../images/copy-button.png"></p>
+</div>
+<p>Bastion password: ylGytzYJ</p>
+<div class="copy highlight"><pre><span></span><code>ssh<span class="w"> </span>admin@api.65e9b74cf3e1220011745c89.cloud.techzone.ibm.com<span class="w"> </span>-p<span class="w"> </span><span class="m">40222</span>
+</code></pre></div>
+<div class="copy highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">ES_URL</span><span class="o">=</span>https://elasticsearch-elastic.apps.65e9b74cf3e1220011745c89.cloud.techzone.ibm.com:443
+<span class="nb">export</span><span class="w"> </span><span class="nv">ES_USER</span><span class="o">=</span>elastic
+<span class="nb">export</span><span class="w"> </span><span class="nv">ES_PASSWORD</span><span class="o">=</span>J3723QrU9lX7Eld2E99NRT5D
+</code></pre></div>
+<p>Now, execute the following curl. Please edit the URL so that search-wa-docs-&lt;name&gt; contains your first name. </p>
+<div class="copy highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>PUT<span class="w"> </span><span class="s2">"</span><span class="si">${</span><span class="nv">ES_URL</span><span class="si">}</span><span class="s2">/search-wa-docs-&lt;NAME&gt;?pretty"</span><span class="w"> </span>-u<span class="w"> </span><span class="s2">"</span><span class="si">${</span><span class="nv">ES_USER</span><span class="si">}</span><span class="s2">:</span><span class="si">${</span><span class="nv">ES_PASSWORD</span><span class="si">}</span><span class="s2">"</span><span class="w"> </span><span class="se">\</span>
+-H<span class="w"> </span><span class="s2">"Content-Type: application/json"</span><span class="w"> </span>--insecure<span class="w"> </span>-d<span class="s1">'</span>
+<span class="s1">{</span>
+<span class="s1">  "mappings": {</span>
+<span class="s1">    "_source": {</span>
+<span class="s1">        "excludes": [</span>
+<span class="s1">          "text_embedding"</span>
+<span class="s1">        ]</span>
+<span class="s1">    },</span>
+<span class="s1">    "properties": {</span>
+<span class="s1">      "text_embedding": {</span>
+<span class="s1">        "type": "sparse_vector"</span>
+<span class="s1">      },</span>
+<span class="s1">      "text": {</span>
+<span class="s1">        "type": "text"</span>
+<span class="s1">      }</span>
+<span class="s1">    }</span>
+<span class="s1">  }</span>
+<span class="s1">}'</span>
+</code></pre></div>
+<div class="admonition info">
+<p class="admonition-title">Notes</p>
+<ul>
+<li><strong>search-wa-docs-&lt;name&gt;</strong> will be your index name.</li>
+<li><strong>text_embedding</strong> is the field that will keep ELSER output when data is ingested, and sparse_vector type is required for ELSER output field.</li>
+<li><strong>text</strong> is the input filed for the inference processor. In the example dataset, the name of the input field is text which will be used by ELSER model to process.</li>
+</ul>
+</div>
+<p>The output of the previous command should be something like: </p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">    </span><span class="nt">"acknowledged"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"shards_acknowledged"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"index"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"search-wa-docs-javier"</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Now that we have created out destination index to which the embeddings will be uploaded, we follow by creating an ingest pipeline with an inference processor. This ingest pipeline will be in charge of populating the destination index with data from our watsonx Assistant documentation source index. To do so execute from bastion machine the following curl command. Please edit the URL so that pipeline name elser-v2-test-&lt;name&gt; contains your first name.</p>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>PUT<span class="w"> </span><span class="s2">"</span><span class="si">${</span><span class="nv">ES_URL</span><span class="si">}</span><span class="s2">/_ingest/pipeline/elser-v2-test-&lt;NAME&gt;?pretty"</span><span class="w"> </span>-u<span class="w"> </span><span class="s2">"</span><span class="si">${</span><span class="nv">ES_USER</span><span class="si">}</span><span class="s2">:</span><span class="si">${</span><span class="nv">ES_PASSWORD</span><span class="si">}</span><span class="s2">"</span><span class="w"> </span><span class="se">\</span>
+-H<span class="w"> </span><span class="s2">"Content-Type: application/json"</span><span class="w"> </span>--insecure<span class="w"> </span>-d<span class="s1">'</span>
+<span class="s1">{</span>
+<span class="s1">  "processors": [</span>
+<span class="s1">    {</span>
+<span class="s1">      "inference": {</span>
+<span class="s1">        "model_id": ".elser_model_2",</span>
+<span class="s1">        "input_output": [</span>
+<span class="s1">          {</span>
+<span class="s1">            "input_field": "text",</span>
+<span class="s1">            "output_field": "text_embedding"</span>
+<span class="s1">          }</span>
+<span class="s1">        ]</span>
+<span class="s1">      }</span>
+<span class="s1">    }</span>
+<span class="s1">  ]</span>
+<span class="s1">}'</span>
+</code></pre></div>
+<p>The output of the previous command should be something like: </p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">    </span><span class="nt">"acknowledged"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Execute the following curl command for the ingestion to start. This command creates the tokens from the text by reindexing the data through the inference pipeline that uses ELSER as the inference model. Edit the curl so that the variable &lt;name&gt; corresponds to your first name.</p>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="s2">"</span><span class="si">${</span><span class="nv">ES_URL</span><span class="si">}</span><span class="s2">/_reindex?wait_for_completion=false&amp;pretty"</span><span class="w"> </span>-u<span class="w"> </span><span class="s2">"</span><span class="si">${</span><span class="nv">ES_USER</span><span class="si">}</span><span class="s2">:</span><span class="si">${</span><span class="nv">ES_PASSWORD</span><span class="si">}</span><span class="s2">"</span><span class="w"> </span><span class="se">\</span>
+-H<span class="w"> </span><span class="s2">"Content-Type: application/json"</span><span class="w"> </span>--insecure<span class="w"> </span>-d<span class="s1">'</span>
+<span class="s1">{</span>
+<span class="s1">  "source": {</span>
+<span class="s1">    "index": "wa-docs-&lt;name&gt;"</span>
+<span class="s1">  },</span>
+<span class="s1">  "dest": {</span>
+<span class="s1">    "index": "search-wa-docs-&lt;NAME&gt;",</span>
+<span class="s1">    "pipeline": "elser-v2-test-&lt;NAME&gt;"</span>
+<span class="s1">  }</span>
+<span class="s1">}'</span>
+</code></pre></div>
+<div class="admonition info">
+<p class="admonition-title">Notes</p>
+<ul>
+<li><strong>wa-docs-&lt;name&gt;</strong> is the index you created when uploading the example file to Elasticsearch cluster. It contains the text data.</li>
+<li><strong>search_wa-docs-&lt;name&gt;</strong> is the search index that has ELSER output field.</li>
+<li><strong>elser-v2-test-&lt;name&gt;</strong> is the ingest pipeline with an inference processor using ELSER model.</li>
+</ul>
+</div>
+<p>The output of the previous command should be something like: </p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">    </span><span class="nt">"task"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"nkJhgkDtRTyQ05BcWI0o5g:87752"</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Go in the Elasticsearch web interface to <strong>Content</strong>, then click on <strong>Indeces</strong> and wait for the search-wa-docs-&lt;name&gt; index appears with 100 Docs count.</p>
+<p><img alt="" src="../images/es-index-available.png"></p>
+<p>Once the index is available, we can test the semantic search index, by executing the following curl command. Make sure that search-wa-docs-&lt;name&gt; corresponds to your previously created index.</p>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>GET<span class="w"> </span><span class="s2">"</span><span class="si">${</span><span class="nv">ES_URL</span><span class="si">}</span><span class="s2">/search-wa-docs-&lt;NAME&gt;/_search?pretty"</span><span class="w"> </span>-u<span class="w"> </span><span class="s2">"</span><span class="si">${</span><span class="nv">ES_USER</span><span class="si">}</span><span class="s2">:</span><span class="si">${</span><span class="nv">ES_PASSWORD</span><span class="si">}</span><span class="s2">"</span><span class="w"> </span>-H<span class="w"> </span><span class="s2">"Content-Type: application/json"</span><span class="w"> </span>--insecure<span class="w"> </span>-d<span class="s1">'</span>
+<span class="s1">{</span>
+<span class="s1">   "query":{</span>
+<span class="s1">      "text_expansion":{</span>
+<span class="s1">         "text_embedding":{</span>
+<span class="s1">            "model_id":".elser_model_2",</span>
+<span class="s1">            "model_text":"how to set up custom extension?"</span>
+<span class="s1">         }</span>
+<span class="s1">      }</span>
+<span class="s1">   }</span>
+<span class="s1">}'</span>
+</code></pre></div>
+<p>We are now ready to build the extension in watsonx Assistant for Elasticsearch API.</p>
+<h2 id="4-set-up-the-assistant">[4] Set up the assistant</h2>
+<p>From the watsonx Assistant instance launch page, click Launch watsonx Assistant.</p>
+<p><img alt="" src="../images/wa-1.png"></p>
+<p>This is a new assistant, so you will first configure the basics. First, enter its name, description, and click Next.</p>
+<p><img alt="" src="../images/wa-2.png"></p>
+<p><img alt="" src="../images/wa-3.png"></p>
+<p>Customize the assistant to your linking, then click Next and Create.</p>
+<p><img alt="" src="../images/wa-4.png"></p>
+<h2 id="5-adding-the-watsonx-discovery-semantical-search-extension">[5] Adding the watsonx Discovery Semantical Search Extension</h2>
+<p>Download the OpenAPI specification for the watsonx Discovery integration (right-click in the following link -&gt; download):</p>
+<ul>
+<li><a href="../assets/elasticsearch-generic-openapi.json">elasticsearch-generic-openapi.json</a></li>
+</ul>
+<p>Use the OpenAPI specification to build a custom extension. Go to the <strong>Integrations</strong> page.</p>
+<p><img alt="" src="../images/watsonx_discovery_extension-1.png"></p>
+<p>Then, click on <strong>Build custom extension</strong>.</p>
+<p><img alt="" src="../images/watsonx_discovery_extension-2.png"></p>
+<p>Click on <strong>Next</strong>.</p>
+<p><img alt="" src="../images/watsonx_discovery_extension-3.png"></p>
+<p>Enter the Extension name: watsonx Discovery, and click <strong>Next</strong>.</p>
+<p><img alt="" src="../images/watsonx_discovery_extension-4.png"></p>
+<p>Add the OpenAPI specification, and click <strong>Next</strong>.</p>
+<p><img alt="" src="../images/watsonx_discovery_extension-5.png"></p>
+<p>Review the extension and click <strong>Finish</strong>.</p>
+<p><img alt="" src="../images/watsonx_discovery_extension-6.png"></p>
+<p>You have created the watsonx Discovery custom extension, and now you need to specify which watsonx Discovery instance it will access. On the popup window, click <strong>Add</strong>.</p>
+<p><img alt="" src="../images/watsonx_discovery_extension-7.png"></p>
+<p><img alt="" src="../images/watsonx_discovery_extension-8.png"></p>
+<p>Click <strong>Next</strong> and configure the Authentication:</p>
+<ul>
+<li>Authentication type: Basic Auth</li>
+<li>Username: elastic</li>
+<li>Password: J3723QrU9lX7Eld2E99NRT5D</li>
+<li>elastic_url: elasticsearch-elastic.apps.65e9b74cf3e1220011745c89.cloud.techzone.ibm.com:443</li>
+</ul>
+<p><img alt="" src="../images/watsonx_discovery_extension-9.png"></p>
+<p>Click <strong>Next</strong> and the <strong>Finish</strong>.</p>
+<p><img alt="" src="../images/watsonx_discovery_extension-10.png"></p>
+<div class="admonition question">
+<p class="admonition-title">Why am I not using the watsonx Discovery built-in search extension?</p>
+<p>An alternative to creating a custom Watsonx Discovery extension is to use the built-in search integration (also referred to as the Watson Assistant search skill). The search skill is a purpose- built integration between Assistant and Discovery for a simple, quicker, and easier experience.</p>
+<p>However, it does not expose and use all of the API parameters and the full power of watsonx Discovery, which will be used by watsonx. For example, the built-in search skill has an "Emphasize the Answer" capability which allows Watson Assistant to identify the snippet of text within each response that it thinks is most likely to be the direct, concise answer to the  question that was asked and will emphasize that text within the search result card. That can be a great feature when not using LLMs, but it can be detrimental when integrating with an LLM, especially if the result has no useful answer. </p>
+<p>Furthermore, watsonx Discovery provides an answer confidence for each answer that provides an estimate of the probability that the answer is correct, so a user of watsonx Discovery can use that probability to decide whether the answer is plausible enough that it should be emphasized. This value corresponds with the semnatic similarity between the query vector and the retrieved stored vector. The built-in search integration in Watson Assistant does not expose the answer confidence because it is designed to provide simple, minimal functionality. In contrast, a custom extension lets you access all of the outputs of watsonx Discovery, so that low confidence answers can be ignored.</p>
+</div>
+<h2 id="6-adding-the-watsonxai-custom-extension">[6] Adding the watsonx.ai custom extension</h2>
+<p>Next, you will create the watsonx custom extension. First, download the watsonx OpenAPI specification file from the following link:</p>
+<ul>
+<li><a href="https://github.com/watson-developer-cloud/assistant-toolkit/blob/70129c3f7d944cac4e87bfb8d46ac4b63f94cf86/integrations/extensions/starter-kits/language-model-watsonx/watsonx-openapi.json">watsonx-openapi.json</a></li>
+</ul>
+<p>This JSON file defines the watsonx custom extension.</p>
+<p>In watsonx Assistant, use the left menu to open the <strong>Integrations</strong> page. Then, scroll down and click the <strong>Build custom extension</strong> button.</p>
+<p><img alt="" src="../images/watsonx_ai_extension-1.png"></p>
+<p>This first screen describes what you’ll need to create the extension. Note that the watsonx OpenAPI JSON document, which you just obtained, is key to the setup. Click <strong>Next</strong> in the top right to proceed to the next screen.</p>
+<p><img alt="" src="../images/watsonx_ai_extension-2.png"></p>
+<p>The second screen asks you to name and describe the custom extension. Name it watsonx custom extension and add a description, like “Custom extension for watsonx”. Click <strong>Next</strong> to proceed to the next screen.</p>
+<p><img alt="" src="../images/watsonx_ai_extension-3.png"></p>
+<p>In the next screen, either drag-and-drop or click to upload the watsonx OpenAPI specification file OpenAPI spec you downloaded, then click <strong>Next</strong> to proceed to the next screen.</p>
+<p><img alt="" src="../images/watsonx_ai_extension-4.png"></p>
+<p>Click <strong>Finish</strong> to create the custom extension.</p>
+<p><img alt="" src="../images/watsonx_ai_extension-5.png"></p>
+<p>You should now be able to see the watsonx custom extension in your Integrations catalog. Click <strong>Add</strong> so that you can configure a connection to your watsonx project.</p>
+<p><img alt="" src="../images/watsonx_ai_extension-6.png"></p>
+<p>Click <strong>Add</strong> on the popup screen and hit <strong>Next</strong> on the following screen.</p>
+<p>On the Authentication screen configure the following parameters:
+•   Choose OAuth 2.0 as the Authentication type.
+•   Select Custom apikey as the Grant type.
+•   Copy and paste the IBM Cloud API key you saved earlier into the Apikey field.
+•   Click Next.</p>
+<p><img alt="" src="../images/watsonx_ai_extension-7.png"></p>
+<p>Click <strong>Finish</strong> and <strong>Close</strong> on the final review screen.</p>
+<h2 id="6-upload-and-configure-the-watsonx-actions">[6] Upload and configure the watsonx actions</h2>
+<p>Next, you will upload the actions your assistant will need, so download the actions JSON file.</p>
+<p><strong>Note:</strong> You should not upload these actions directly into an existing assistant because doing so will overwrite your existing actions.</p>
+<p>The actions in this file will use search only when no action matches the user request. They search a complete watsonx project, and as such they are general-purpose and usable with any data set.</p>
+<p>To upload the JSON file, click <strong>Actions</strong>, and then <strong>Global Settings</strong>.</p>
+<p><img alt="" src="../images/wa_actions_creation-1.png"></p>
+<p><img alt="" src="../images/wa_actions_creation-2.png"></p>
+<p>Scroll to the right until you are able to see and select the <strong>Upload/Download</strong> tab. There, drag and drop the actions JSON file, and click <strong>Upload</strong>.</p>
+<p><img alt="" src="../images/wa_actions_creation-3.png"></p>
+<p><img alt="" src="../images/wa_actions_creation-4.png"></p>
+<p>Click <strong>Upload</strong> and upload the Gen-AI-Workshop-action file that you can download from the following link:</p>
+<ul>
+<li><a href="../assets/Gen-AI-Workshop-action.json">Gen-AI-Workshop-action.json</a></li>
+</ul>
+<p>Then, click <strong>Close</strong>.</p>
+<p>This file contains three actions:</p>
+<ul>
+<li>
+<p><strong>Search:</strong> Connects to watsonx Discovery to search for documents related to the user query. The out-of-box "No Action Matches" action has been configured to send all input to this action, so whatever the user enters will be used as the search input. In turn, this action invokes the "Generate Answer" action to generate a response to the query.</p>
+</li>
+<li>
+<p><strong>Generate answer:</strong> Configures the query prompt and document passages resulting from the Search action and calls the action "Invoke watsonx generation API." It is not meant to be invoked directly, but rather by the "Search" action.</p>
+</li>
+<li>
+<p><strong>Invoke watsonx generation API:</strong> Connects to watsonx and, using as context the documents resulting from the search, asks the language model to generate an answer to the user query. It is not meant to be invoked directly, but rather by the "Generate Answer" action.</p>
+</li>
+</ul>
+<p>The actions JSON file you uploaded also includes variables used by the actions. You need to update two of them with your watsonx Discovery text embeddings index and watsonx project ID.</p>
+<p>First, click on the index_name variable and set the Initial value to your index name. It should be something like search-wa-docs-&lt;name&gt;. Then, click <strong>Save</strong>.</p>
+<p><img alt="" src="../images/wa_actions_creation-5.png"></p>
+<p><img alt="" src="../images/wa_actions_creation-6.png"></p>
+<p>Now, click on the variable watsonx_project_id and set the Initial value to the watsonx.ai’s project ID. Then, click <strong>Save</strong>.</p>
+<p><img alt="" src="../images/wa_actions_creation-7.png"></p>
+<p><img alt="" src="../images/wa_actions_creation-8.png"></p>
+<p>This list describes the available variables providing for greater control over your model:</p>
+<ol>
+<li><strong>model_id</strong>: The id of the watsonx model that you select for this action. Defaults to google/flan-ul2.</li>
+<li><strong>model_input</strong>: The input to the watsonx model. You may change this to do prompt engineering, but a default will be used by the model if you don’t pass a prompt here.</li>
+<li><strong>model_parameters_max_new_tokens</strong>: The maximum number of new tokens to be generated. Defaults to 300.</li>
+<li><strong>model_parameters_min_new_tokens</strong>: The minimum number of the new tokens to be generated. Defaults to 1.</li>
+<li><strong>model_parameters_repetition_penalty</strong>: Represents the penalty for penalizing tokens that have already been generated or belong to the context. The range is 1.0 to 2.0 and defaults to 1.1.</li>
+<li><strong>model_parameters_stop_sequences</strong>: Stop sequences are one or more strings which will cause the text generation to stop if/when they are produced as part of the output. Stop sequences encountered prior to the minimum number of tokens being generated will be ignored. The list may contain up to 6 strings. Defaults to ["\n\n"]</li>
+<li><strong>model_parameters_temperature</strong>: The value used to control the next token probabilities. The range is from 0 to 1.00; 0 makes it deterministic. model_response: The text generated by the model in response to the model input.</li>
+<li><strong>passages</strong>: Concatenation of top search results.</li>
+<li><strong>query_text</strong>: You may change this to pass queries to watsonx Discovery. By default the Search action passes the user’s input.text directly.</li>
+<li><strong>search_results</strong>: Response object from Discovery query.</li>
+<li><strong>snippet</strong>: Top results from the watsonx Discovery document search.</li>
+<li><strong>verbose</strong>: A boolean that will print debugging output if true. Default is false.</li>
+<li><strong>watsonx_api_version</strong>: watsonx api date version. It currently defaults to 2023-05-29.</li>
+<li><strong>watsonx_project_id</strong>: You must set this value to be a project ID value from watsonx.</li>
+<li><strong>index_name</strong>: the name of the index in watsonx Discovery.</li>
+</ol>
+<p><strong>Try it out!</strong></p>
+<p>Now that you are finished configuring your assistant, try it out! Click on Preview and enter the same question as before: what is a session variable?. Note the clear, concise, and conversational answer. Compare this to the generic answer from ChatGPT and the excerpt answer provided by Watson Discovery earlier!</p>
+<p><img alt="" src="../images/wa_actions_creation-9.png"></p>
+<p><img alt="" src="../images/wa_actions_creation-10.png"></p>
+<div class="admonition success">
+<p class="admonition-title">The End</p>
+<p>You have reached the end of this lab.</p>
+</div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2024 IBM
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.top", "navigation.sections", "navigation.tracking", "navigation.instant", "content.code.copy", "toc.follow"], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.8fd75fb4.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1190 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../prompt-engineering-exercise-answers/">
+      
+      
+        <link rel="next" href="../lab-generative-ai-and-rag/">
+      
+      
+      <link rel="icon" href="../images/watsonx-logo.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.10">
+    
+    
+      
+        <title>Lab 2. Tuning Gen AI - watsonx Generative AI Workshop</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.7e359304.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:300,300i,400,400i,700,700i%7CIBM+Plex+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"IBM Plex Sans";--md-code-font:"IBM Plex Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#tuning-generative-ai-prompt-engineering-vs-prompt-tuning" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="watsonx Generative AI Workshop" class="md-header__button md-logo" aria-label="watsonx Generative AI Workshop" data-md-component="logo">
+      
+  <img src="../images/IBM_logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            watsonx Generative AI Workshop
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Lab 2. Tuning Gen AI
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="watsonx Generative AI Workshop" class="md-nav__button md-logo" aria-label="watsonx Generative AI Workshop" data-md-component="logo">
+      
+  <img src="../images/IBM_logo.png" alt="logo">
+
+    </a>
+    watsonx Generative AI Workshop
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../prompt-engineering-exercises/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 1. Prompt Engineering
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../prompt-engineering-exercise-answers/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 1 Answers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Lab 2. Tuning Gen AI
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Lab 2. Tuning Gen AI
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#in-this-session" class="md-nav__link">
+    <span class="md-ellipsis">
+      In this session
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-classification-use-case" class="md-nav__link">
+    <span class="md-ellipsis">
+      A classification use case
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#connecting-to-the-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Connecting to the environment
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-a-watsonxai-project-and-deployment-space" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create a watsonx.ai project and deployment space
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prompt-engineering-vs-prompt-tuning-with-flan-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prompt engineering vs Prompt tuning with Flan models
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Prompt engineering vs Prompt tuning with Flan models">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#download-the-training-dataset" class="md-nav__link">
+    <span class="md-ellipsis">
+      Download the training dataset
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#running-prompt-tuning-experiment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Running Prompt tuning experiment
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#performing-prompt-engineering" class="md-nav__link">
+    <span class="md-ellipsis">
+      Performing Prompt engineering
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deploy-and-evaluate-tuned-flan-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deploy and evaluate Tuned Flan model
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prompt-engineering-vs-prompt-tuning-with-llama-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prompt engineering vs Prompt tuning with Llama models
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Prompt engineering vs Prompt tuning with Llama models">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#performing-prompt-engineering_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Performing Prompt engineering
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#running-prompt-tuning-experiment-optional" class="md-nav__link">
+    <span class="md-ellipsis">
+      Running Prompt tuning experiment (OPTIONAL)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deploy-and-evaluate-tuned-llama-model-optional" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deploy and evaluate Tuned Llama model (OPTIONAL)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prompt-engineering-or-prompt-tuning-which-one-to-choose" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prompt engineering or Prompt tuning, which one to choose?
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prompt-tuning-with-a-notebook" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prompt tuning with a Notebook
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lab-generative-ai-and-rag/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 4. Virtual Assistants with RAG
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#in-this-session" class="md-nav__link">
+    <span class="md-ellipsis">
+      In this session
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-classification-use-case" class="md-nav__link">
+    <span class="md-ellipsis">
+      A classification use case
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#connecting-to-the-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Connecting to the environment
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-a-watsonxai-project-and-deployment-space" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create a watsonx.ai project and deployment space
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prompt-engineering-vs-prompt-tuning-with-flan-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prompt engineering vs Prompt tuning with Flan models
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Prompt engineering vs Prompt tuning with Flan models">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#download-the-training-dataset" class="md-nav__link">
+    <span class="md-ellipsis">
+      Download the training dataset
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#running-prompt-tuning-experiment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Running Prompt tuning experiment
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#performing-prompt-engineering" class="md-nav__link">
+    <span class="md-ellipsis">
+      Performing Prompt engineering
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deploy-and-evaluate-tuned-flan-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deploy and evaluate Tuned Flan model
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prompt-engineering-vs-prompt-tuning-with-llama-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prompt engineering vs Prompt tuning with Llama models
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Prompt engineering vs Prompt tuning with Llama models">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#performing-prompt-engineering_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Performing Prompt engineering
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#running-prompt-tuning-experiment-optional" class="md-nav__link">
+    <span class="md-ellipsis">
+      Running Prompt tuning experiment (OPTIONAL)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deploy-and-evaluate-tuned-llama-model-optional" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deploy and evaluate Tuned Llama model (OPTIONAL)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prompt-engineering-or-prompt-tuning-which-one-to-choose" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prompt engineering or Prompt tuning, which one to choose?
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prompt-tuning-with-a-notebook" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prompt tuning with a Notebook
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<div><h1 id="tuning-generative-ai-prompt-engineering-vs-prompt-tuning">Tuning Generative AI: Prompt Engineering vs Prompt Tuning</h1>
+<h3 id="in-this-session">In this session</h3>
+<p>We are going to work on a use case where prompt engineering has a hard time getting the desired outputs. On the other hand, we will apply prompt tuning to analyze the results generated. For this, we will use Prompt Lab to perform prompt engineering and evaluate the model outputs, and on the other hand, Tuning Studio to run the prompt tuning experiment, creating a tuned version of an existing foundation model. These two resources are available at IBM watsonx.ai.</p>
+<h2 id="a-classification-use-case">A classification use case</h2>
+<p>Consider the following classification use case. Suppose you are tasked with automating the triage of incoming complaints (a classification task). For your company, you need to route a complaint to all applicable departments among the following:</p>
+<ul>
+<li>Planning</li>
+<li>Development</li>
+<li>Service</li>
+<li>Warehouse</li>
+<li>Level 3 (L3 for short)</li>
+<li>Packaging</li>
+<li>Marketing</li>
+</ul>
+<p>Some business rules exist for each department. Some of these include:</p>
+<ul>
+<li>Service/Support complaints go to <strong>Service</strong>. </li>
+<li>Skills issues that need support go to <strong>Service</strong> and <strong>L3</strong>. </li>
+<li>Out-of-stock/missing items complaints go to <strong>Warehouse</strong> and may involve <strong>Packaging</strong>.</li>
+<li>If the item is being discontinued, the complaints go to <strong>Warehouse</strong> and <strong>Planning</strong>.</li>
+<li>Missing feature requests go to <strong>Planning</strong> and <strong>Development</strong>. </li>
+<li>Complaints that are related to the perception of what the business does or does not provide go to <strong>Marketing</strong> and may involve <strong>Planning</strong> and <strong>Development</strong>.</li>
+<li>And more … based on your business process.</li>
+</ul>
+<p>This is a good generative AI use case as a large enterprise must handle lots of complaints and they must be routed properly to the correct department for rapid response. Such routing tasks need to be automated without spending a large number of human resources. Generative AI is also better at handling incoming complaints in natural language.</p>
+<p>However, there are complexities with this use case. Large Language Models (LLMs) are very good at classifying with single labels (such as positive vs. negative sentiments) but will have a tougher time with business categories which may have very different meanings than the training data for the LLM. </p>
+<p>In this case, sometimes the business requires multiple labels output, and there is specific business logic for why a particular output label is used. Prompt engineering, as you will discover, will have a tough time properly classifying all complaints. In prompt tuning, instead of human-generated hard prompts, a user provides a set of labeled data to tune the model. For this example, you will provide a list of sample complaints and the associated departments to be notified. Watsonx.ai will tune the model using this data and create a “soft prompt”. This does not change any of the existing model weights. Instead, when a user enters a prompt, it is augmented by the soft prompt and is passed to the model to generate output.</p>
+<p>Next, we can see a series of examples of the training dataset (in JSONL format) that we will use to execute prompt tuning:</p>
+<p><img alt="" src="../images/0.1-dataset-examples.png"></p>
+<h2 id="connecting-to-the-environment">Connecting to the environment</h2>
+<ol>
+<li>
+<p>Click on <a href="https://dataplatform.cloud.ibm.com/wx">this link</a> to access the <strong>watsonx</strong> platform.</p>
+</li>
+<li>
+<p>Onces the <strong>watsonx console</strong> is opened, make sure to <strong>select</strong> the <strong>IBM Cloud account</strong> where you were invited, and the <strong>correct location (Dallas)</strong>. </p>
+<p><img alt="" src="../images/56-select-account-location.png"></p>
+</li>
+</ol>
+<h2 id="create-a-watsonxai-project-and-deployment-space">Create a watsonx.ai project and deployment space</h2>
+<ol>
+<li>
+<p>From the watsonx.ai console (Home window), click <strong>+</strong> to the right of <strong>Projects</strong> to create a new project.</p>
+<p><img alt="" src="../images/01-new-project.png"></p>
+</li>
+<li>
+<p>Name the new project as <strong>&lt;Your Initials&gt; Tuning Workshop</strong> (where <strong><em>&lt;Your Initials&gt;</em></strong> is your name initials [i.e. John Smith would be JS]). Make sure the <strong>storage service</strong> is automatically selected. Then, click <strong>Create</strong>.</p>
+<p><img alt="" src="../images/02-create-project.png"></p>
+</li>
+<li>
+<p>Next, you will link the <strong>Watson Machine Learning service</strong> to this watsonx project. To do this, move to the <strong>Manage</strong> window of the project. Select <strong>Services &amp; Integrations</strong> and click <strong>Associate service +</strong>.</p>
+<p><img alt="" src="../images/02.1-associate-service.png"></p>
+</li>
+<li>
+<p>On the next screen, select the <strong>Watson Machine Learning instance</strong> that is provided throught TechZone.</p>
+<p><img alt="" src="../images/02.2-select-wml.png"></p>
+</li>
+<li>
+<p>Once associated, let's go back to the watsonx.ai console by opening the left side window and clicking <strong>Home</strong>.</p>
+<p><img alt="" src="../images/03-back-home.png"></p>
+</li>
+<li>
+<p>Click <strong>+</strong> to the right of <strong>Deployment spaces</strong> to create a new deployment space.</p>
+<p><img alt="" src="../images/04-new-deployment-space.png"></p>
+</li>
+<li>
+<p>Name the new deployment space <strong>&lt;Your Initials&gt; Tuning Space</strong>. Select <strong>Development</strong> as Deployment stage. Make sure a <strong>storage service</strong> is selected (should be automatically selected when using a TechZone reservation). Select the <strong>machine learning service</strong> available with the TechZone reservation. Click <strong>Create</strong>.</p>
+<p><img alt="" src="../images/05-create-deployment-space.png"></p>
+</li>
+<li>
+<p>Wait until the deployment space is created and then click <strong>Close</strong>.</p>
+<p><img alt="" src="../images/06-wait-deployment-space.png"></p>
+</li>
+<li>
+<p>Once created, let's go back to the watsonx.ai console by opening the left side window and clicking <strong>Home</strong>.</p>
+<p><img alt="" src="../images/07-back-home.png"></p>
+</li>
+</ol>
+<h2 id="prompt-engineering-vs-prompt-tuning-with-flan-models">Prompt engineering vs Prompt tuning with Flan models</h2>
+<p>Let's start by doing prompt engineering with the small flan model, flan-t5-xl-3b. Then we will perform some tests with the large flan model, flan-ul2-20b. Finally, we will run a prompt tuning experiment on flan-t5-xl-3b, and perform an evaluation of the outputs in the prompt lab.</p>
+<h3 id="download-the-training-dataset">Download the training dataset</h3>
+<ol>
+<li>
+<p>Download the following dataset. Use right-click -&gt; download to save the file in your workstation:</p>
+<ul>
+<li><a href="../assets/TuneFoundationModels/Call%20center%20complaints.jsonl">Call center complaints.jsonl</a></li>
+</ul>
+</li>
+</ol>
+<h3 id="running-prompt-tuning-experiment">Running Prompt tuning experiment</h3>
+<ol>
+<li>
+<p>From the <strong>Home</strong> window, open the new project previously created by clicking in <strong>Tuning Workshop</strong>.</p>
+<p><img alt="" src="../images/08-open-new-project.png"></p>
+</li>
+<li>
+<p>First of all, we're going to start the execution of prompt tuning with flan-t5-xl-3b while we perform prompt engineering. In the <strong>Overview</strong> window, let's open the tuning studio by clicking <strong>Tune a foundation model with labeled data</strong>.</p>
+<p><img alt="" src="../images/09-open-tuning-studio.png"></p>
+</li>
+<li>
+<p>Name the tuning experiment as <strong>Tuning flan-t5-xl-3b</strong> and then click <strong>Create</strong>.</p>
+<p><img alt="" src="../images/10-create-tuning-experiment.png"></p>
+</li>
+<li>
+<p>Click <strong>Select a foundation model</strong>.</p>
+<p><img alt="" src="../images/11-select-model.png"></p>
+</li>
+<li>
+<p>Select <strong>flan-t5-xl-3b</strong> model. </p>
+<p><img alt="" src="../images/12-select-flan.png"></p>
+</li>
+<li>
+<p>Confirm model selection by clicking <strong>Select</strong>.</p>
+<p><img alt="" src="../images/13-confirm-selection.png"></p>
+</li>
+<li>
+<p>Select <strong>Text</strong> as the initialization method and <strong>copy and paste</strong> the following as the initial prompt.</p>
+<div class="highlight"><pre><span></span><code>Classify the following complaint and determine which departments to route the complaint: Planning, Development, Service, Warehouse, L3, Packaging, and Marketing.
+</code></pre></div>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>You can use the copy button that appears in the right side of the code box as seen in this screenshot:</p>
+<p><img alt="" src="../images/copy-button-tuning.png"></p>
+</div>
+<p><img alt="" src="../images/14-initialize-text.png"></p>
+</li>
+<li>
+<p>Select <strong>Generation</strong> as the task that fits our goal. We pick generation instead of classification because we need the LLM to output completion with multiple classifications. Generation is able to generate text in a certain style and format. The model will be trained with labeled data to output the proper completion.</p>
+<p><img alt="" src="../images/15-select-task.png"></p>
+</li>
+<li>
+<p>The <strong>Add training data</strong> column appears. You can use the <strong>Browse</strong> button to add the <strong>Call center complaints.jsonl</strong> file.</p>
+<p><img alt="" src="../images/16-browse-dataset.png"></p>
+</li>
+<li>
+<p>Select the <strong>Call center complaints.jsonl</strong> file. </p>
+<p><img alt="" src="../images/17-select-dataset.png"></p>
+<p>watsonx.ai will perform a quick verification check on the file. If there is any error message, you will need to fix the JSONL file and re-load the file. </p>
+</li>
+<li>
+<p>Now, let's click on <strong>Configure parameters</strong>.</p>
+<p><img alt="" src="../images/18-configure-parameters.png"></p>
+</li>
+<li>
+<p>The <strong>Configure parameters</strong> page opens. For now, there is no need to modify the parameters, but it is important to take into account which are the default values. Click <strong>Cancel</strong> to exit this page.</p>
+<p><img alt="" src="../images/19-exit-parameters.png"></p>
+</li>
+<li>
+<p>Click <strong>Start tuning</strong>.</p>
+<p><img alt="" src="../images/20-start-tuning.png"></p>
+</li>
+<li>
+<p>You are returned to the Tuning experiment. Note that this can take quite some time (between 5-10 minutes).</p>
+<p><img alt="" src="../images/21-wait-tuning.png"></p>
+</li>
+</ol>
+<h3 id="performing-prompt-engineering">Performing Prompt engineering</h3>
+<p>While we wait for the prompt tuning experiment to finish, we are going to perform prompt engineering with the flan models and evaluate the outputs obtained in each case.</p>
+<ol>
+<li>
+<p>Go back to the project by clicking <strong>Tuning Workshop</strong> on the top left. Then, go to <strong>Overview</strong> and click <strong>Experiment with foundation models and build prompts</strong>.</p>
+<p><img alt="" src="../images/22-open-prompt-lab.png"></p>
+</li>
+<li>
+<p>If the Prompt lab opens with the Structure mode, change to <strong>Freeform</strong>. Then, select the <strong>flan-t5-xl-3b model</strong> (open the foundation models library if required).</p>
+<p><img alt="" src="../images/23-select-model.png"></p>
+</li>
+<li>
+<p>Let's start by performing <strong>zero-shot prompting</strong>. <strong>Copy and paste</strong> the next prompt and click <strong>Generate</strong>.</p>
+<div class="highlight"><pre><span></span><code>Classify the following complaint and determine which departments to route the complaint: Planning, Development, Service, Warehouse, L3, Packaging, and Marketing.
+
+Where are the 2 extra sets of sheets that are supposed to come with my order?
+</code></pre></div>
+<p><img alt="" src="../images/24-zero-shot.png"></p>
+<p>Given the business use case and the background information, you want the model to respond with a completion of <strong>Warehouse</strong> and <strong>Packaging</strong>, but instead, the model returns a completion of <strong>Marketing</strong>. This is not an unreasonable answer given that the flan model has no understanding of the business context.</p>
+<p>For now, note the following token costs (you will use this information later):</p>
+<p><strong>Tokens: 47 input + 2 generated = 49 out of 4096</strong></p>
+</li>
+<li>
+<p>Now, we'll do a one-shot prompting by adding a single example. <strong>Copy and paste</strong> the next prompt to the freeform, deleting the previous one. Then, click <strong>Generate</strong>.</p>
+<div class="highlight"><pre><span></span><code>Classify the following complaint and determine which departments to route the complaint: Planning, Development, Service, Warehouse, L3, Packaging, and Marketing.
+
+Input: I was put on hold for 2 hours and your so-called SME cannot answer my questions!
+Output: Service, L3
+
+Input: Where are the 2 extra sets of sheets that are supposed to come with my order?
+Output: 
+</code></pre></div>
+<p><img alt="" src="../images/25-one-shot.png"></p>
+<p>There is some improvement over the zero-shot prompt in that the LLM identifies <strong>Warehouse</strong> this time. Even so, it does not return the desired second class.</p>
+<p>Note the following token costs (you will use this information later):</p>
+<p><strong>Tokens: 84 input + 2 generated = 86 out of 4096</strong></p>
+</li>
+<li>
+<p>Let's try to achieve the desired output by performing a 3-shot prompting. <strong>Copy and paste</strong> the next prompt to the freeform, deleting the previous one. Then, click <strong>Generate</strong>.</p>
+<div class="highlight"><pre><span></span><code>Classify the following complaint and determine which departments to route the complaint: Planning, Development, Service, Warehouse, L3, Packaging, and Marketing.
+
+Input: I was put on hold for 2 hours and your so-called SME cannot answer my questions!
+Output: Service, L3
+
+Input: I cannot find the mouthguard to the hockey set. It is useless without it.
+Output: Warehouse, Packaging
+
+Input: The Kron model you shipped me is missing 2 drawer handles!
+Output: Warehouse, Packaging
+
+Input: Where are the 2 extra sets of sheets that are supposed to come with my order?
+Output: 
+</code></pre></div>
+<p><img alt="" src="../images/26-3-shot.png"></p>
+<p>The model has not improved its completion and still just provides <strong>Warehouse</strong> as the completion. The model has not learned to identify more than one class despite the 3-shot prompt. </p>
+<p>We could try additional shots. Given enough examples that look very similar to the prompt that we are trying to classify, we could get the <strong>flan-t5-xl-3b</strong> to repeat <strong>Warehouse</strong> and <strong>Packaging</strong> as the completion. But that just means the LLM can recognize this pattern. It is not likely to work on other patterns.</p>
+<p>Note the following token costs (you will use this information later):</p>
+<p><strong>Tokens: 132 input + 2 generated = 134 out of 4096</strong></p>
+</li>
+<li>
+<p>Finally, let's try this same <strong>3-shot prompting</strong> with the <strong>large flan model</strong>. Select the <strong>flan-ul2-20b</strong> model. We need to <strong>delete the previous generated output</strong>, keeping the rest of the prompt. Click <strong>Generate</strong>.</p>
+<p><img alt="" src="../images/27-3-shot-flan20.png"></p>
+<p>Even with a larger model, it does not seem to learn that multiple targets for notification are allowed and desirable. It is still incorrect, despite every example passed in having multiple departments in the output.</p>
+</li>
+</ol>
+<h3 id="deploy-and-evaluate-tuned-flan-model">Deploy and evaluate Tuned Flan model</h3>
+<ol>
+<li>
+<p>Go back to the project by clicking <strong>Tuning Workshop</strong> on the top left. If a pop up appears, click <strong>Leave</strong>.</p>
+<p><img alt="" src="../images/27.1-leave-prompt.png"></p>
+</li>
+<li>
+<p>Then, in the <strong>Assets</strong> window, click on <strong>Tuning flan-t5-xl-3b</strong> experiment.</p>
+<p><img alt="" src="../images/28-open-tuning-experiment.png"></p>
+</li>
+<li>
+<p>The tuning experiment should be completed by now. First of all, <strong>observe</strong> the <strong>loss function</strong> obtained in the experiment.</p>
+<p><img alt="" src="../images/28.1-loss-function.png"></p>
+<p>Remember that the evaluation is an <strong>iterative process</strong>, at this point, we would consider the possibility to run more experiments with other parameters to try to get as close as possible to 0. Anyway, the model is no longer gaining a lot more knowledge, since the <strong>loss function</strong> levels off approximately at <strong>0.7</strong> around epoch 15. In this case, we could try to slightly increase the learning rate and rerun the experiment. However, this is sufficient for the current lab.</p>
+<p>According to the evaluation process, after we try to improve the loss function by adjusting parameters or improving the data set, the next step is to evaluate the outputs obtained by the tuned model. </p>
+</li>
+<li>
+<p>The tuned model needs to be deployed before it can be used. Scroll down on the Tuning experiment page and click on <strong>New deployment</strong>.</p>
+<p><img alt="" src="../images/29-new-deployment.png"></p>
+</li>
+<li>
+<p>The <strong>Deploy the tuned model</strong> page opens. Notice that the <strong>Name</strong> is <strong>Tuning flan-t5-xl-3b (1)</strong>. You can add an additional <strong>Description</strong> or <strong>Tags</strong>. Select the Deployment space named <strong>Tuning Space</strong>, that we created in the previous steps. Then, click <strong>Create</strong>.</p>
+<p><img alt="" src="../images/30-deploy-tuned-model.png"></p>
+<p>You get this message:</p>
+<p><img alt="" src="../images/31-info-deployment.png"></p>
+</li>
+<li>
+<p>When completed, you will see that your tuned model is deployed. Click on this <strong>Tuning flan-t5-xl-3b (1)</strong> model.</p>
+<p><img alt="" src="../images/32-deployed-model.png"></p>
+</li>
+<li>
+<p>Click on the <strong>Open in the Prompt Lab</strong> pulldown and select the project you want to use. In the example below, it is <strong>Project: Tuning Workshop</strong>.</p>
+<p><img alt="" src="../images/33-open-in-prompt-lab.png"></p>
+</li>
+<li>
+<p>The watsonx.ai Prompt Lab page opens and the <strong>Tuning flan-t5-xl-3b (1)</strong> model is automatically selected. Make sure you are using <strong>Freeform</strong>.</p>
+<p><img alt="" src="../images/34-prompt-lab-tuned-model.png"></p>
+</li>
+<li>
+<p>Let's start by inferencing one complaint with the <strong>Instruction text</strong>. <strong>Copy and paste</strong> the next prompt and click <strong>Generate</strong>.</p>
+<div class="highlight"><pre><span></span><code>Classify the following complaint and determine which departments to route the complaint: Planning, Development, Service, Warehouse, L3, Packaging, and Marketing.
+
+Where are the 2 extra sets of sheets that are supposed to come with my order?
+</code></pre></div>
+<p><img alt="" src="../images/35-1st-prompt.png"></p>
+<p>And that completion of <strong>Warehouse, Packaging</strong> is exactly what you want to see.</p>
+<p>Note the following token costs (you will use this information later):</p>
+<p><strong>Tokens: 53 input + 4 generated = 57 out of 4096</strong></p>
+</li>
+<li>
+<p>Now, <strong>copy and paste</strong> the next sentence alone, deleting the previous prompt. Then, click <strong>Generate</strong>.</p>
+<div class="highlight"><pre><span></span><code>Where are the 2 extra sets of sheets that are supposed to come with my order?
+</code></pre></div>
+<p><img alt="" src="../images/36-wo-instruction.png"></p>
+<p>Same result. You do not need to provide any text for <strong>Instruction</strong> as that information was already included when you did the prompt tuning. This is another advantage of prompt tuning over prompt engineering. With no need for Instruction, fewer tokens are consumed every time this tuned model is used. This makes it easier to use, and the cost savings will add up.</p>
+<p>Note the following token costs (you will use this information later):</p>
+<p><strong>Tokens: 24 input + 4 generated = 28 out of 4096</strong></p>
+</li>
+<li>
+<p>Let's try another complaint and see if the output makes sense. <strong>Copy and paste</strong> the following sentence. Then, click <strong>Generate</strong>.</p>
+<div class="highlight"><pre><span></span><code>I see a 2-door model in your TV ad, but why is that not available?
+</code></pre></div>
+<p><img alt="" src="../images/37-2nd-prompt.png"></p>
+<p>The Tuning flan-t5-xl-3b (1) model returns with a completion of <strong>Planning, Marketing</strong>. This is what you expected according to the business rules. The fact that it appears in the TV advertisement but is not available can be a marketing mistake. On the other hand, if this is truly a missing feature then clearly customers are looking for it, so Planning should be notified.</p>
+</li>
+<li>
+<p>Finally, we try one last complaint to evaluate the generated output. <strong>Copy and paste</strong> the following sentence. Then, click <strong>Generate</strong>.</p>
+<div class="highlight"><pre><span></span><code>I could not get someone on the phone who could fix my problems! Your so-called "SMEs" are just not helpful.
+</code></pre></div>
+<p><img alt="" src="../images/38-3rd-prompt.png"></p>
+<p>The Tuning flan-t5-xl-3b (1) model returns with the completion of <strong>Service, L3</strong>. This is again what is expected according to the business rules. This is clearly a Service issue, but with the comment on SME, the Level 3 support team needs to be notified as well.</p>
+</li>
+<li>
+<p>Compare the previously noted token usage information for the same query: "Where are the 2 extra sets of sheets that are supposed to come with my order?".</p>
+<p><img alt="" src="../images/39-tokens-table.png"></p>
+<p>This shows another <strong>advantage</strong> of Prompt tuning. The inference using the prompt tuned model without instruction, is significantly less costly (in therms of tokens consumed) than the 3-shot prompting, which didn't even work. Like we commented in previous steps, we would need to increase the number of examples to make the prompt engineering work at least for <strong>one query</strong>, which would already increase the use of tokens.</p>
+</li>
+</ol>
+<h2 id="prompt-engineering-vs-prompt-tuning-with-llama-models">Prompt engineering vs Prompt tuning with Llama models</h2>
+<p>In this section, we are going to perform similar experiments but using the models from the llama family. Let's start by doing prompt engineering directly with the large llama model, llama-2-70b-chat, which is the largest model in the watsonx.ai family. Then, we will run a prompt tuning experiment on the small version of the model, llama-2-13b-chat, and perform an evaluation of the outputs in the prompt lab.</p>
+<h3 id="performing-prompt-engineering_1">Performing Prompt engineering</h3>
+<ol>
+<li>
+<p>Select the <strong>llama-2-70b-chat model</strong> (open the foundation models library if required). We'll start with <strong>zero-shot prompting</strong>. In the <strong>Freeform</strong> mode, <strong>copy and paste</strong> the following prompt. Then, click <strong>Generate</strong>.</p>
+<div class="highlight"><pre><span></span><code>Classify the following complaint and determine which departments to route the complaint: Planning, Development, Service, Warehouse, L3, Packaging, and Marketing.
+
+Where are the 2 extra sets of sheets that are supposed to come with my order?
+</code></pre></div>
+<p><img alt="" src="../images/40-zero-shot-llama.png"></p>
+<p>The llama-2-70b-chat model has not understood the task, as it consists in returning the departments where the complaint should be routed. Instead, it has returned an extension of the complaint itself, along with two fields to be filled in: classification and department to route complaint.</p>
+<p>Note the following token costs (you will use this information later):</p>
+<p><strong>Tokens: 59 input + 75 generated = 134 out of 4096</strong></p>
+</li>
+<li>
+<p>Let's add one example (<strong>one-shot prompting</strong>) to show the model the output we are looking for. <strong>Copy and paste</strong> the following prompt. Then, click <strong>Generate</strong>.</p>
+<div class="highlight"><pre><span></span><code>Classify the following complaint and determine which departments to route the complaint: Planning, Development, Service, Warehouse, L3, Packaging, and Marketing.
+
+Input: I was put on hold for 2 hours and your so-called SME cannot answer my questions!
+Output: Service, L3
+
+Input: Where are the 2 extra sets of sheets that are supposed to come with my order?
+Output: 
+</code></pre></div>
+<p><img alt="" src="../images/41-one-shot-llama.png"></p>
+<p>As we can see, the model starts returning a loop pattern of input/output pairs. The first line that returns, responds to the input that we have introduced, and it does it correctly, with the labels that we expected to obtain. If you try this same prompt with <strong>llama-2-13b-chat</strong>, you'll observe this <strong>same behaviour</strong>. </p>
+<p>Note the following token costs (you will use this information later):</p>
+<p><strong>Tokens: 97 input + 200 generated = 297 out of 4096</strong></p>
+</li>
+<li>
+<p>To limit ourselves to obtain the desired output, we use the <strong>Enter key</strong> as stop sequence in the model parameters. To do that, we open the <strong>Model parameters</strong> window and add the <strong>Enter key</strong> to the <strong>stop sequences</strong>. Next, <strong>delete the generated output</strong>, keeping the previous prompt. Then, click <strong>Generate</strong>.</p>
+<p><img alt="" src="../images/42-stop-sequence.png"></p>
+<p>Choosing effective stop sequences depends on your use case and the nature of the generated output that you expect. We haven't really made the model understand the outputs we want, but we have managed to constrain it to do so.</p>
+<p>Note the following token costs (you will use this information later):</p>
+<p><strong>Tokens: 97 input + 7 generated = 104 out of 4096</strong></p>
+</li>
+<li>
+<p>Let's try another complaint and see if the output makes sense. <strong>Copy and paste</strong> the following sentence. Then, click <strong>Generate</strong>.</p>
+<div class="highlight"><pre><span></span><code>Classify the following complaint and determine which departments to route the complaint: Planning, Development, Service, Warehouse, L3, Packaging, and Marketing.
+
+Input: I was put on hold for 2 hours and your so-called SME cannot answer my questions!
+Output: Service, L3
+
+Input: I see a 2-door model in your TV ad, but why is that not available?
+Output: 
+</code></pre></div>
+<p><img alt="" src="../images/43-2nd-complaint.png"></p>
+<p>The generated output for this complaint, <strong>Marketing, Planning</strong>, is what we expected. </p>
+</li>
+<li>
+<p>Finally, we try one last complaint to evaluate the generated output. <strong>Copy and paste</strong> the following sentence. Then, click <strong>Generate</strong>.</p>
+<div class="highlight"><pre><span></span><code>Classify the following complaint and determine which departments to route the complaint: Planning, Development, Service, Warehouse, L3, Packaging, and Marketing.
+
+Input: I was put on hold for 2 hours and your so-called SME cannot answer my questions!
+Output: Service, L3
+
+Input: I could not get someone on the phone who could fix my problems! Your so-called "SMEs" are just not helpful.
+Output: 
+</code></pre></div>
+<p><img alt="" src="../images/44-3rd-complaint.png"></p>
+<p>The generated output for this complaint, <strong>Service, L3</strong>, is what we expected.</p>
+<p>As we mentioned at the beginning of the lab, this use case is complex to solve for prompt engineering, because there is a specific business logic for each of the labels and they may have a different meaning than the LLM training data. Even so, we have managed to obtain <strong>satisfactory outputs</strong> with the Llama family of models and specifically with a sufficiently large model, although we have had to intervene by introducing a stop sequence. </p>
+<p>It should be noted that we have evaluated the output of only three different complaints, where the results have been as desired. Since we are dealing with prompt engineering, it is possible to find other cases with a <strong>specific business logic</strong> that does not work, which would require adding more examples. Even so, in general terms we can conclude that the results are satisfactory.</p>
+<p>Next, we will run a tuning experiment of the small llama model, <strong>llama-2-13b-chat</strong>, and we will discuss some key points to consider when deciding between prompt engineering or prompt tuning in this case.</p>
+</li>
+</ol>
+<h3 id="running-prompt-tuning-experiment-optional">Running Prompt tuning experiment (OPTIONAL)</h3>
+<p>This section is <strong>optional</strong>, since the running time of the experiment with the llama-2-13b-chat model is <strong>between 15 and 20 minutes</strong>. </p>
+<ol>
+<li>
+<p>Go back to the project by clicking <strong>Tuning Workshop</strong> on the top left. If a pop up appears, click <strong>Leave</strong>.</p>
+<p><img alt="" src="../images/44.1-leave-tuned-llama.png"></p>
+</li>
+<li>
+<p>Follow the <strong>steps 2 to 14</strong> of the <strong>Prompt engineering vs Prompt tuning with Flan models</strong> section, but selecting the <strong>llama-2-13b-chat</strong> model instead of the <strong>flan-t5-xl-3b</strong> model, and naming the tuning experiment accordingly.</p>
+</li>
+<li>
+<p>Wait until the tuning experiment is completed. Then, <strong>observe</strong> the <strong>loss function</strong> obtained.</p>
+<p><img alt="" src="../images/45-llama-loss-function.png"></p>
+<p>In this case, the minimum value reached in <strong>20 epochs</strong> is <strong>0.374</strong>, and it seems to have a <strong>tendency to continue decreasing</strong> with some more epochs. A good option would be to <strong>increase slightly the learning rate</strong>, since the loss curve does not drop significantly. For this lab, this result is sufficient, so we move on to the deploy and output evaluation.</p>
+</li>
+</ol>
+<h3 id="deploy-and-evaluate-tuned-llama-model-optional">Deploy and evaluate Tuned Llama model (OPTIONAL)</h3>
+<p>Perform the next steps only if you executed and completed the tuning experiment of the <strong>llama-2-13b-chat</strong> model. Otherwise, you can still scheck this section to observe the results.</p>
+<ol>
+<li>
+<p>Follow the <strong>steps 23 to 27</strong> of the <strong>Prompt engineering vs Prompt tuning with Flan models</strong> section, in order to deploy the model and open the prompt lab with the new tuned llama model.</p>
+</li>
+<li>
+<p>Let's start by inferencing one complaint directly without <strong>Instruction</strong>. <strong>Copy and paste</strong> the next prompt and click <strong>Generate</strong>.</p>
+<div class="highlight"><pre><span></span><code>Where are the 2 extra sets of sheets that are supposed to come with my order?
+</code></pre></div>
+<p><img alt="" src="../images/46-1st-complaint-llama.png"></p>
+<p>The generated output for this complaint, <strong>Warehouse, Packaging</strong>, is what we expected.</p>
+<p>Note the following token costs (you will use this information later):</p>
+<p><strong>Tokens: 19 input + 8 generated = 27 out of 4096</strong></p>
+</li>
+<li>
+<p>Try the second complaint to check the generated output. <strong>Copy and paste</strong> the next prompt and click <strong>Generate</strong>.</p>
+<div class="highlight"><pre><span></span><code>I see a 2-door model in your TV ad, but why is that not available? 
+</code></pre></div>
+<p><img alt="" src="../images/47-2nd-complaint-llama.png"></p>
+<p>The generated output for this complaint, <strong>Marketing, Planning</strong>, is what we expected.</p>
+</li>
+<li>
+<p>Finally, try the third complaint. <strong>Copy and paste</strong> the next prompt and click <strong>Generate</strong>.</p>
+<div class="highlight"><pre><span></span><code>I could not get someone on the phone who could fix my problems! Your so-called "SMEs" are just not helpful. 
+</code></pre></div>
+<p><img alt="" src="../images/48-3rd-complaint-llama.png"></p>
+<p>The generated output for this complaint, <strong>Service, L3</strong>, is what we expected.</p>
+</li>
+</ol>
+<h3 id="prompt-engineering-or-prompt-tuning-which-one-to-choose">Prompt engineering or Prompt tuning, which one to choose?</h3>
+<p>We have achieved satisfactory outputs for both prompt engineering and prompt tuning with the llama model family. In the following, we mention a number of key points that will help us to decide which method to use in cases like this.</p>
+<ul>
+<li><strong>Token costs</strong> for each inference. The next table contains a comparison of the previously noted token usage information for the same query: "Where are the 2 extra sets of sheets that are supposed to come with my order?".</li>
+</ul>
+<p><img alt="" src="../images/49-tokens-table-llama.png"></p>
+<p>Thanks to prompt tuning, we have reduced the number of tokens for each inference (<strong>more than half</strong>) with respect to the <strong>one-shot prompting with stop sequence</strong>. It should be noted that this is a cost saving in the long term, since with each inference performed we are saving a considerable number of tokens compared to prompt engineering.</p>
+<p>The use of tokens translates into <strong>economic cost</strong>. The Watson Machine Learning service measures token usage in <strong>Resource Units (RU)</strong>, and the equivalent of <strong>1 RU = 1000 tokens</strong>. In addition, each model has its own price per RU.</p>
+<p><img alt="" src="../images/50-economic-token-cost.png"></p>
+<p>When performing prompt engineering, we have used the large llama model, which implies a higher economic cost per RU. Normally, for complex tasks that need to be solved with prompt engineering, we will rely on the large models. On the other hand, applying prompt tuning on the small version of the models is enough to get the desired outputs. </p>
+<ul>
+<li><strong>Capacity Unit Hours (CUH)</strong>. Measures all Watson Machine Learning activity except for foundation model inferencing. The tuning experiment increases the CUH consumption. Depending on the Watson Machine Learning paid plan purchased, we have a different economic cost.</li>
+</ul>
+<p><img alt="" src="../images/51-cuh-usage.png"></p>
+<p>In the <strong>Essentials</strong> plan we would pay according to the CUH metric. On the other hand, in the <strong>Standard</strong> plan we would simply have a usage limit per month. In this lab, we have only run the experiment once, but it is likely that it should be run some more times to adjust the parameters and improve the loss function. Prompt tuning can be understood as an early investment, with which we will achieve long-term savings due to token inference costs.</p>
+<p>Consult <a href="https://dataplatform.cloud.ibm.com/docs/content/wsj/getting-started/wml-plans.html?context=wx&amp;audience=wdp#cuh-metering">this link</a> for further information about <strong>Watson Machine Learning plans and compute usage</strong>.</p>
+<ul>
+<li>
+<p><strong>Less interpretability</strong> with prompt tuning, since soft prompts are unrecognizable to the human eye. In contrast, with prompt engineering the interpretability is higher, since the prompts are manually crafted.</p>
+</li>
+<li>
+<p><strong>Readily available data</strong> to perform prompt tuning for a specific task. For this lab, where prompt engineering returns satisfactory results, this point could be key. In the case where data is not readily available for the training set, it would be time consuming to create one. In addition, guidelines should be followed to keep control of the <strong>quality of the data</strong>.</p>
+</li>
+<li>
+<p><strong>Output reliability</strong>. In this lab, we have not focused on getting a an evaluation metric, but rather on verifying that the models achieves outputs according to the business logic of the problem. If we wanted to further evaluate the outputs, we could run an inference of a <strong>test set</strong>, which is composed of a number of examples that are not included in the training set. In the following section, we will see this process implemented with code using a notebook.</p>
+</li>
+</ul>
+<h2 id="prompt-tuning-with-a-notebook">Prompt tuning with a Notebook</h2>
+<p>For this section of the lab, the experiment is not performed in the watsonx interface, instead, it is implemented in code using a <strong>notebook</strong>. Moreover, the use case is different and is based on an extracted dataset from <strong>HuggingFace</strong>.</p>
+<p>The notebook is prepared with the necessary code to run the data reading and preparation, the prompt tuning experiment, the test set inference and the evaluation of the tuned model and two other reference models. </p>
+<ol>
+<li>
+<p>Now, open and examine the notebook <strong>llama-2-13b NeuroPatents Tuning and Inference.ipynb</strong> by clicking the follosing link.</p>
+<p>This notebook shows how you could follow all the steps in a programatic way. Take your time to review it.</p>
+<ul>
+<li><a href="../assets/TuneFoundationModels/llama-2-13b%20NeuroPatents%20Tuning%20and%20Inference.html">llama-2-13b NeuroPatents Tuning and Inference.ipynb</a></li>
+</ul>
+</li>
+</ol>
+<div class="admonition tip">
+<p class="admonition-title">Note</p>
+<p>If you want to edit the previous notebook in your own environment/workstation, download it using <a href="../assets/TuneFoundationModels/llama-2-13b%20NeuroPatents%20Tuning%20and%20Inference.ipynb"><strong>THIS LINK</strong></a></p>
+</div>
+<div class="admonition success">
+<p class="admonition-title">The End</p>
+<p>You have reached the end of this lab.</p>
+</div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2024 IBM
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.top", "navigation.sections", "navigation.tracking", "navigation.instant", "content.code.copy", "toc.follow"], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.8fd75fb4.min.js"></script>
+      
+    
+  </body>
+</html>
