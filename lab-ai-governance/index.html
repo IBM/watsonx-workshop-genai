@@ -1,0 +1,1090 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../lab-generative-ai-and-rag/">
+      
+      
+      
+      <link rel="icon" href="../images/watsonx-logo.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.10">
+    
+    
+      
+        <title>Lab 4. AI Governance - watsonx Generative AI Workshop</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.7e359304.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:300,300i,400,400i,700,700i%7CIBM+Plex+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"IBM Plex Sans";--md-code-font:"IBM Plex Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#generative-ai-governance" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="watsonx Generative AI Workshop" class="md-header__button md-logo" aria-label="watsonx Generative AI Workshop" data-md-component="logo">
+      
+  <img src="../images/IBM_logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            watsonx Generative AI Workshop
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Lab 4. AI Governance
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="watsonx Generative AI Workshop" class="md-nav__button md-logo" aria-label="watsonx Generative AI Workshop" data-md-component="logo">
+      
+  <img src="../images/IBM_logo.png" alt="logo">
+
+    </a>
+    watsonx Generative AI Workshop
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../prompt-engineering-exercises/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 1. Prompt Engineering
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../prompt-engineering-exercise-answers/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 1 Answers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lab-tuning-generative-ai/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 2. Tuning Gen AI
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lab-generative-ai-and-rag/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 3. Virtual Assistants with RAG
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Lab 4. AI Governance
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Lab 4. AI Governance
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#creating-an-ai-use-case" class="md-nav__link">
+    <span class="md-ellipsis">
+      Creating an AI Use Case
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creating-a-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      Creating a Project
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creating-deployment-spaces" class="md-nav__link">
+    <span class="md-ellipsis">
+      Creating Deployment Spaces
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#download-the-test-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      Download the test data
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-and-evaluate-an-llm-prompt-template" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create and evaluate an LLM prompt template
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-an-evaluation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Running an evaluation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reviewing-the-evaluation-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reviewing the evaluation results
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#documenting-the-ai-use-case" class="md-nav__link">
+    <span class="md-ellipsis">
+      Documenting the AI use case
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#review-and-approve-the-candidate-prompt-template" class="md-nav__link">
+    <span class="md-ellipsis">
+      Review and approve the candidate prompt template
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deploy-the-prompt-template-for-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deploy the prompt template for Testing
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#evaluating-the-prompt-template-in-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Evaluating the prompt template in Testing
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#creating-an-ai-use-case" class="md-nav__link">
+    <span class="md-ellipsis">
+      Creating an AI Use Case
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creating-a-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      Creating a Project
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creating-deployment-spaces" class="md-nav__link">
+    <span class="md-ellipsis">
+      Creating Deployment Spaces
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#download-the-test-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      Download the test data
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-and-evaluate-an-llm-prompt-template" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create and evaluate an LLM prompt template
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-an-evaluation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Running an evaluation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reviewing-the-evaluation-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reviewing the evaluation results
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#documenting-the-ai-use-case" class="md-nav__link">
+    <span class="md-ellipsis">
+      Documenting the AI use case
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#review-and-approve-the-candidate-prompt-template" class="md-nav__link">
+    <span class="md-ellipsis">
+      Review and approve the candidate prompt template
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deploy-the-prompt-template-for-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deploy the prompt template for Testing
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#evaluating-the-prompt-template-in-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Evaluating the prompt template in Testing
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<div><h1 id="generative-ai-governance">Generative AI Governance</h1>
+<h2 id="creating-an-ai-use-case">Creating an AI Use Case</h2>
+<p>First, create an AI Use Case. It will contain all the information regarding the governance of this use case.</p>
+<ol>
+<li>
+<p>From the <a href="https://dataplatform.cloud.ibm.com/wx">watsonx home page</a>, click the <strong>AI governance</strong> tile.</p>
+<p><img alt="screenshot" src="../images/gov-01.png"></p>
+</li>
+<li>
+<p>On the AI use cases screen, click on the <strong>Manage settings</strong> icon.</p>
+<p><img alt="screenshot" src="../images/gov-02.png"></p>
+</li>
+<li>
+<p>On the Manage screen, click on <strong>Inventories</strong>. On the Inventories screen, click on <strong>New inventory</strong>.</p>
+<p><img alt="screenshot" src="../images/gov-03.png"></p>
+</li>
+<li>
+<p>On the New Inventory screen, enter a friendly name. Uncheck the <em>Add collaborators after creation</em> option. Then, select the Cloud Object Storage instance that's available in this account, then click <strong>Create</strong>.</p>
+<p><img alt="screenshot" src="../images/gov-04.png"></p>
+</li>
+<li>
+<p>Click the <strong>x</strong> button to close the inventories screen.</p>
+<p><img alt="screenshot" src="../images/gov-05.png"></p>
+</li>
+<li>
+<p>Now, you should be back to AI use cases page. Click on <strong>New AI use case +</strong>.</p>
+<p><img alt="screenshot" src="../images/gov-06.png"></p>
+</li>
+<li>
+<p>Fill in the New AI use case screen as follows:</p>
+<ul>
+<li><strong>Name</strong>: 1-Insurance Claim – Agent Assist</li>
+<li><strong>Description</strong>: Use an LLM to summarize claim notifications.</li>
+<li><strong>Risk level</strong>: Medium</li>
+<li><strong>Inventory</strong>: The inventory you just created</li>
+<li><strong>Status</strong>: Awaiting development</li>
+<li><strong>Tags</strong>: "LLM", "Claims"</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>In some IBM Cloud accounts, the administrator might've been created additional required fields. If that's the case, insert any random value for those fields as seen below:</p>
+<p><img alt="screenshot" src="../images/gov-07b.png">   </p>
+</div>
+<p>Then click <strong>Create</strong></p>
+<p><img alt="screenshot" src="../images/gov-07.png"></p>
+</li>
+<li>
+<p>You have created the use case, and now you see the Overview page of it. From here, you can update any part of this as needed by clicking on one of the pencil icons.</p>
+<p><img alt="screenshot" src="../images/gov-08.png"></p>
+</li>
+<li>
+<p>Go to the <strong>Lifecycle</strong> tab of the AI use case.</p>
+<p>As the screen states, there are "No AI assets tracked in this approach" yet, that will change once you create the prompt template for this use case. As the business owner, you will be able to follow their work as the prompt template moves through its lifecycle.</p>
+<p><img alt="screenshot" src="../images/gov-09.png"></p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>This is the first of the capabilities of <strong>watsonx.governance</strong>: the ability to create and manage AI use cases across your organization.</p>
+<p>Now you will work on a project where you will create a prompt template and then associate it with this use case.</p>
+</div>
+</li>
+</ol>
+<h2 id="creating-a-project">Creating a Project</h2>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>You're going to create a project by using a sample project for watsonx.governance.</p>
+</div>
+<ol>
+<li>
+<p>From the hamburger menu, select <strong>Resource Hub</strong>.</p>
+<p><img alt="screenshot" src="../images/gov-10.png"></p>
+</li>
+<li>
+<p>To quickly find the right sample project, enter <strong><em>Getting started</em></strong> in the search box. Select the <strong>Getting started with watsonx.governance</strong> project from the search results.</p>
+<p><img alt="screenshot" src="../images/gov-11.png"></p>
+</li>
+<li>
+<p>Click <strong>Create project</strong>.</p>
+<p><img alt="screenshot" src="../images/gov-12.png"></p>
+</li>
+<li>
+<p>Change the name of the project to be created to <strong><em>&lt;YourInitials&gt;-governance</em></strong> and click <strong>Create</strong>.</p>
+<p><img alt="screenshot" src="../images/gov-13.png"></p>
+</li>
+<li>
+<p>On the import screen, click on <strong>View new project</strong>.</p>
+<p><img alt="screenshot" src="../images/gov-14.png"></p>
+<div class="admonition info">
+<p class="admonition-title">Alternative way to create a sample project</p>
+<p>You could follow this alternative steps to achieve the same result:</p>
+<ul>
+<li>From the hamburger menu select Projects -&gt; View all projects.</li>
+<li>There, click on New project, then chose Create a project from a sample or file.</li>
+<li>On the Create a project from sample or file page, select the From sample tab, then follow the same instructions.</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Go to the <strong>Manage</strong> tab of your newly created project, then to the <strong>Services and integrations</strong> section in the left-hand pane. Finally, click on <strong>Associate service +</strong>.</p>
+<p><img alt="screenshot" src="../images/gov-15.png"></p>
+</li>
+<li>
+<p>From the Associate service screen, select your <strong>Watson Machine Learning</strong> instance and click <strong>Associate</strong>.</p>
+<p><img alt="screenshot" src="../images/gov-16.png"></p>
+</li>
+</ol>
+<h2 id="creating-deployment-spaces">Creating Deployment Spaces</h2>
+<ol>
+<li>
+<p>From the hamburger menu select <strong>Deployments</strong>.</p>
+<p><img alt="screenshot" src="../images/gov-17.png"></p>
+</li>
+<li>
+<p>Click on <strong>New Deployment Space</strong>.</p>
+<p><img alt="screenshot" src="../images/gov-18.png"></p>
+</li>
+<li>
+<p>Define details with the following information for the Development deployment space and click <strong>Create</strong>:</p>
+<ul>
+<li><strong>Name</strong>: &lt;YourInitials&gt;-development</li>
+<li><strong>Description</strong>: Development space for Insurance Claim Agent Assist use case.</li>
+<li><strong>Deployment stage</strong>: Development</li>
+<li>If needed, associate with storage service and ML service.</li>
+</ul>
+<p><img alt="screenshot" src="../images/gov-19.png"></p>
+</li>
+<li>
+<p>Create another deployment space to deploy Production models and prompt templates. Use the following details:</p>
+<ul>
+<li><strong>Name</strong>: &lt;YourInitials&gt;-production</li>
+<li><strong>Description</strong>: Production space for Insurance Claim Agent Assist use case.</li>
+<li><strong>Deployment stage</strong>: Production</li>
+<li>If needed, associate with storage service and ML service.</li>
+</ul>
+<p><img alt="screenshot" src="../images/gov-20.png"></p>
+</li>
+</ol>
+<h2 id="download-the-test-data">Download the test data</h2>
+<ol>
+<li>
+<p>Go to the <strong>Assets</strong> tab in your new project <strong><em>&lt;YourInitials&gt;-governance</em></strong>. Then find the file <strong><em>Insurance claim summarization test data.csv</em></strong> and download it by clicking the three-dot menu.</p>
+<p><img alt="screenshot" src="../images/gov-21.png"></p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>Feel free to open the file and take a look. This is the file that we'll use to test if our Generative AI prompt template is working properly.</p>
+<p>In this case, the prompt will summarize an Insurance Claim. Therefore, the test file contains a list of claims, and the ideal summary that we'd expect from the model.</p>
+</div>
+</li>
+</ol>
+<h2 id="create-and-evaluate-an-llm-prompt-template">Create and evaluate an LLM prompt template</h2>
+<ol>
+<li>
+<p>Go to the <strong>Assets</strong> tab in your new project <strong><em>&lt;YourInitials&gt;-governance</em></strong>. Then click the prompt <strong>Insurance claim summarization</strong> by clicking its name.</p>
+<p><img alt="screenshot" src="../images/gov-22.png"></p>
+</li>
+<li>
+<p>If the following popup opens, check <strong>Don't show this message again</strong> and click <strong>Edit</strong>.</p>
+<p><img alt="screenshot" src="../images/gov-23.png"></p>
+</li>
+<li>
+<p>Click on the <strong>View prompt info</strong> button to see the details of this prompt. Note that the task is <strong>Summarization</strong>. It indicates that the prompt will be used for a summarization task. This matters because different tasks are evaluated differently.</p>
+<p><img alt="screenshot" src="../images/gov-24.png"></p>
+</li>
+<li>
+<p>Let’s focus on the prompt itself in the main screen:</p>
+<ul>
+<li>At the top of the screen, you will see the instruction given to the LLM.</li>
+<li>Also note that there are no further examples given. This is what is called “zero shot prompting”.</li>
+<li>At the top right, you can see that the “flan-ul2-20b” foundation model was used for this prompt. There are several different models that you can choose.</li>
+</ul>
+<p><img alt="screenshot" src="../images/gov-25.png"></p>
+</li>
+<li>
+<p>Click on the Model parameters button to see the details.</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>Here you can see more details about the setting for the chosen model, for example that the response from the model can be no longer than 200 tokens (“Max tokens”). In LLM terms, a token is the core building block of generative AI and it is equivalent to a word or part of a word. This tells me how long the summary can be at most.</p>
+</div>
+<p><img alt="screenshot" src="../images/gov-26.png"></p>
+</li>
+<li>
+<p>Note that we are using a variable called <strong><em>input</em></strong> that will contain the full claim description that will be sent from our claims application.</p>
+<p>You have a default value set for this variable so you can test the prompt. Click on the <strong>Prompt variables</strong> button and click on the <strong>Default value</strong> column to see the default value.</p>
+<p>Then, click <strong>Generate</strong> to test the prompt template with the default value for input.</p>
+<p><img alt="screenshot" src="../images/gov-27.png"></p>
+</li>
+<li>
+<p>The summary of the default value of the input varialbe is shown in the <strong>Output</strong> section:</p>
+<p><img alt="screenshot" src="../images/gov-28.png"></p>
+</li>
+</ol>
+<h2 id="running-an-evaluation">Running an evaluation</h2>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>Evaluating a prompt template manually is a bit cumbersome, as many input values must be tested to check the template is working properly.</p>
+<p>watsonx offers a better way to evaluate a prompt by providing a dataset to run a set of tests automatically.</p>
+</div>
+<ol>
+<li>
+<p>Click on the <strong>Evaluate</strong> button at the top of the screen.</p>
+<p><img alt="screenshot" src="../images/gov-29.png"></p>
+</li>
+<li>
+<p>On the Evaluate prompt template screen, expand the Generative AI Quality dimension.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>On the first screen of the Evaluation wizard, you can see the LLM-specific metrics that are appropriate for this prompt template. Earlier, you verified that this prompt is meant for a summarization task, these are the metrics for such a task. The tooling automatically selects the right set of the metrics for the task type, as it says at the top of this screen.</p>
+</div>
+<p>Click <strong>Next</strong>.</p>
+<p><img alt="screenshot" src="../images/gov-30.png"></p>
+</li>
+<li>
+<p>Here, you need to point it to some sample data to help evaluate this prompt. Click the <strong>Browse</strong> button and select the test data csv you downloaded from the project during set up.</p>
+<p><img alt="screenshot" src="../images/gov-31.png"></p>
+</li>
+<li>
+<p>For the <em>input</em> column, select <strong>Insurance_Claim</strong>. For the <em>output</em> column, select <strong>Summary</strong>, then click <strong>Next</strong>.</p>
+<p><img alt="screenshot" src="../images/gov-32.png"></p>
+</li>
+<li>
+<p>Review the settings and then click <strong>Evaluate</strong>.</p>
+<p><img alt="screenshot" src="../images/gov-33.png"></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Remember that this test data contains both a claims description, as well as a summary created by experienced claims handlers. This will help you evaluate how well the model performs in comparison.</p>
+</div>
+</li>
+</ol>
+<h2 id="reviewing-the-evaluation-results">Reviewing the evaluation results</h2>
+<ol>
+<li>
+<p>On the evaluation results screen, you will see the results. Again, you don’t have to go through every single one, but few important ones to highlight are:</p>
+<ul>
+<li>
+<p>The <strong>Model Health</strong> section shows some technical performance metrics, including a token count. Since most commercial models are paid for by the number of input/output tokens, this is an important metric to keep track of.</p>
+</li>
+<li>
+<p>The <strong>first couple of metrics</strong> under the Generative AI Quality header all measure the accuracy of the model. The Violation columns show no warnings, so they are all within acceptable ranges. For example, if the ROUGE-1 threshold is set for 0.8 and the evaluation result for ROGUE-1 is 0.7 then you will see a violation of 0.1.</p>
+</li>
+</ul>
+<p><img alt="screenshot" src="../images/gov-34.png"></p>
+</li>
+<li>
+<p>Scroll down to the bottom of the screen. Find the metrics related to <strong>PII</strong> and <strong>HAP</strong>.</p>
+<p><img alt="screenshot" src="../images/gov-35.png"></p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<ul>
+<li>
+<p><strong>PII</strong> stands for Personally Identifiable Information, <strong>HAP</strong> stands for hate, abuse and profanity. You will check for the presence of both in the input and output data. In your example here, they are all 0%, so we’re safe on those dimensions.</p>
+</li>
+<li>
+<p>At the very end, you will see one metric that does not meet the expected criteria: <strong>Readability</strong> is scored at 52.51, and that is a violation of 7.49 (against a lower threshold of 60). This means the generated summaries are more difficult to read then we’d like them to be.</p>
+</li>
+<li>
+<p>This might be reason for you to work some more on their prompt to see if they can get these results up. Let’s assume for now that you’re OK with this and move on.</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+<h2 id="documenting-the-ai-use-case">Documenting the AI use case</h2>
+<p>There’s one final task for you: associate this prompt template with the use case that the business owner has created, so all of this information can be shared with all stakeholders.</p>
+<ol>
+<li>
+<p>Click on the <strong>AI Factsheet tab</strong>. All the information you just reviewed is recorded in what we call a “factsheet”, think of it as the nutritional label for your AI models. Scroll down and check the information included, you will see:</p>
+<ul>
+<li>The foundation model that was chosen.</li>
+<li>Click on View details to see the model card provided by the model’s creator.</li>
+<li>The task type and actual prompt.</li>
+<li>The prompt parameters.</li>
+<li>And all the evaluation criteria.</li>
+<li>This is all done automatically, the AI engineer did not have to do anything for this, saving them tons of time compared to manual model documentation by copy/pasting all of this into a Word document or so.</li>
+</ul>
+<p><img alt="screenshot" src="../images/gov-36.png"></p>
+</li>
+<li>
+<p>Scroll back up to the top of the Factsheet. Click <strong>Track in AI use case</strong> to associate this prompt with the AI use case.</p>
+<p><img alt="screenshot" src="../images/gov-37.png"></p>
+</li>
+<li>
+<p>Select your <strong>1-Insurance Claim – Agent Assist</strong> use case and click Next.</p>
+<p><img alt="screenshot" src="../images/gov-38.png"></p>
+</li>
+<li>
+<p>This approach is a way to organize models and prompts within a use case. There is no prescribed way to organize it, it can be whatever makes sense for the situation at hand.</p>
+<p>In this case, since we are not including any examples in the prompt, we might put this prompt in a <em>zero shot prompting</em> approach. Click on <strong>New approach +</strong>.</p>
+<p><img alt="screenshot" src="../images/gov-39.png"></p>
+</li>
+<li>
+<p>In the New approach screen, configure it as follows:</p>
+<ul>
+<li><strong>Title</strong>: Insurance Claims Agent Assist Zeroshot prompting</li>
+<li>Optionally, change the icon and color</li>
+</ul>
+<p>Click <strong>Create</strong>.</p>
+<p><img alt="screenshot" src="../images/gov-40.png"></p>
+</li>
+<li>
+<p>Make sure your new Approach is selected and click Next.</p>
+<p><img alt="screenshot" src="../images/gov-41.png"></p>
+</li>
+<li>
+<p>On the model version page, accept the default settings by clicking <strong>Next</strong>.</p>
+<p><img alt="screenshot" src="../images/gov-42.png"></p>
+</li>
+<li>
+<p>Click on Track asset.</p>
+<p><img alt="screenshot" src="../images/gov-43.png"></p>
+</li>
+<li>
+<p>OK, your prompt template is now connected to your use case.</p>
+<p><img alt="screenshot" src="../images/gov-44.png"></p>
+</li>
+</ol>
+<h2 id="review-and-approve-the-candidate-prompt-template">Review and approve the candidate prompt template</h2>
+<ol>
+<li>
+<p>Go back to your AI use case. Go to the Lifecycle tab if not already there.</p>
+<p><img alt="screenshot" src="../images/gov-45.png"></p>
+<p><img alt="screenshot" src="../images/gov-46.png"></p>
+</li>
+<li>
+<p>Go to the <strong>Lifecycle</strong> tab. Now you will see the zero-shot Approach and the prompt template. It is shown in the Develop column as the first step in the lifecycle.</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>From here, you can also review all the details without having to go over to the technical development side of the solution.</p>
+<p>There is a red alert showing next to your prompt template. This is a sign that one or more metrics have violated their threshold. You can find more details about the alert.</p>
+</div>
+<p>Click the tracked prompt.</p>
+<p><img alt="screenshot" src="../images/gov-47.png"></p>
+</li>
+<li>
+<p>At the top you will see the version and any comments you added when creating this version. Let’s jump directly to the evaluation results to see the issues of this version. Click on <strong>Test results</strong>, in the left-hand pane under Evaluation -&gt; Develop.</p>
+<p><img alt="screenshot" src="../images/gov-48.png"></p>
+</li>
+<li>
+<p>At the top of the list, you will see the metrics with the alert. As you’ve seen before, it’s the <strong>Readability</strong> metrics that’s a little low.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>It’s not too bad though and given the typical education level of our claim handlers, you don’t expect this will be a problem in practice. You should keep an eye on it though, so good to have it documented here. You will now mark that this prompt ready is ready for validation testing.</p>
+</div>
+<p>Take your time to review the rest of the Factsheet. Then, click <strong>Cancel</strong> to close it.</p>
+<p><img alt="screenshot" src="../images/gov-49.png"></p>
+</li>
+<li>
+<p>Go to the Overview tab of the AI use case. Click on the <strong>Pencil icon</strong> for the <em>Status</em> field.</p>
+<p><img alt="screenshot" src="../images/gov-50.png"></p>
+</li>
+<li>
+<p>Change the status to <strong>Ready for AI asset validation</strong> and click <strong>Apply</strong>.</p>
+<p><img alt="screenshot" src="../images/gov-51.png"></p>
+</li>
+</ol>
+<h2 id="deploy-the-prompt-template-for-testing">Deploy the prompt template for Testing</h2>
+<ol>
+<li>
+<p>Go back to your project. Note that the prompt is now marked as being tracked in an AI use case.</p>
+<p>Click on the three-dots menu of your prompt template, then select <strong>Promote to space</strong>.</p>
+<p><img alt="screenshot" src="../images/gov-52.png"></p>
+</li>
+<li>
+<p>Select your Development Deployment Space. Tick the <strong>Go to space after promoting the prompt template</strong> box, then click <strong>Promote</strong>.</p>
+<p><img alt="screenshot" src="../images/gov-53.png"></p>
+</li>
+<li>
+<p>Your prompt template is ready to be deployed in the Development Deployment Space so the prompt template is ready to be consumed. Click <strong>New deployment</strong>.</p>
+<p><img alt="screenshot" src="../images/gov-54.png"></p>
+</li>
+<li>
+<p>Insert the following details:</p>
+<ul>
+<li><strong>Name</strong>: &lt;YourInitials&gt;_claims_summary_zero_shot_flan</li>
+<li><strong>Serving Name</strong>: &lt;YourInitials&gt;_claims_summary0_flan</li>
+</ul>
+<p>Then click <strong>Create</strong>.</p>
+<p><img alt="screenshot" src="../images/gov-55.png"></p>
+</li>
+<li>
+<p>Your prompt template can now be consumed. Make sure the status is <strong>Deployed</strong>, then click your deployment name to open it.</p>
+<p><img alt="screenshot" src="../images/gov-56.png"></p>
+</li>
+<li>
+<p>The <strong>API reference</strong> tab shows you how to consume the prompt. Note that you just need to provide the Claim Insurance you want summarized in the input parameter, as the full prompt is already built in the template.</p>
+<p><img alt="screenshot" src="../images/gov-57.png"></p>
+<p>Go to tab <strong>Test</strong> to test it from this interface.</p>
+</li>
+<li>
+<p>Feel free to insert any description of an Insurance Claim in the input box. Then click <strong>Generate</strong></p>
+<p><img alt="screenshot" src="../images/gov-58.png"></p>
+</li>
+<li>
+<p>The result of the prompt template with that input is shown. This is the same output you would get if using the API programatically.</p>
+<p><img alt="screenshot" src="../images/gov-59.png"></p>
+<p>Click the <strong>x</strong> button to close this screen.</p>
+</li>
+</ol>
+<h2 id="evaluating-the-prompt-template-in-testing">Evaluating the prompt template in Testing</h2>
+<ol>
+<li>
+<p>Go back to your AI Use Case.</p>
+</li>
+<li>
+<p>Then, go to the <strong>Lifecycle</strong> tab again. You should now see the deployed prompt in the Validate column with a tag "Pending Evaluation". Your deployment action is automatically reflected in the AI use case, nothing I need to do for that.</p>
+<p><img alt="screenshot" src="../images/gov-60.png"></p>
+</li>
+<li>
+<p>Click on your deployed prompt.</p>
+<p><img alt="screenshot" src="../images/gov-61.png"></p>
+</li>
+<li>
+<p>You'll see the information of your Development deployment here. Click <strong>Open in space</strong> to go back to your deployment.</p>
+<p><img alt="screenshot" src="../images/gov-62.png"></p>
+</li>
+<li>
+<p>Go to the <strong>Evaluations</strong> tab then click <strong>Evaluate</strong>.</p>
+<p><img alt="screenshot" src="../images/gov-63.png"></p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>In a real-case scenario, the previous evaluation in the project was done by the prompt developer.</p>
+<p>Now that the developer has made the prompt template available in a Development/Test deployment space, an AI operator would run the evaluation with real examples to confirm it fulfills the quality requirements.</p>
+</div>
+</li>
+<li>
+<p>Like before. Click on <strong>Next</strong> and add your CSV with expected outcomes. Select the right properties, then click <strong>Next</strong> and <strong>Evaluate</strong>,</p>
+<p><img alt="screenshot" src="../images/gov-64.png"></p>
+<p><img alt="screenshot" src="../images/gov-65.png"></p>
+</li>
+<li>
+<p>Go back to the <strong>Lifecycle</strong> tab of your AI use case. The evaluation of the published prompt template in the Testing deployment space is shown:</p>
+<p><img alt="screenshot" src="../images/gov-66.png"></p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>In a real-case scenario, once the model is validated, it would be promoted to a Production space and monitored there. New tests would be run to evaluate it in Production with updated test data.</p>
+<p>If you have time, feel free to promote the prompt template to your Production deployment space, and see how the information of the AI Use Case gets updated accordingly.</p>
+</div>
+</li>
+</ol></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2024 IBM
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.top", "navigation.sections", "navigation.tracking", "navigation.instant", "content.code.copy", "toc.follow"], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.8fd75fb4.min.js"></script>
+      
+    
+  </body>
+</html>
