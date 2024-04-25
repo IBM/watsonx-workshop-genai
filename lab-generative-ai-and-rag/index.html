@@ -834,6 +834,10 @@ connect every component of conversational search using its NLU model, no-code ac
 <li><a href="../assets/wa_docs_100.tsv">wa_docs_100.tsv</a></li>
 </ul>
 <p>Now we are going to load data into the Elasticsearch service. In order to do so go from the ElasticSearch main page to <strong>Machine Learning</strong>. Click on the section <strong>Data Vizualizer</strong>, then click on <strong>File</strong>. Click on <strong>“Select or drag and drop a File”</strong> and select the <strong>wa_docs_100.tsv</strong> file you just downloaded. The file contains 100 passages of watsonx Assistant documentation. There are three columns in this TSV file, title, section_title and text. The columns are extracted from the original documents. Specifically, each text value is a small chunk of text split from the original document.</p>
+<div class="admonition danger">
+<p class="admonition-title">Danger</p>
+<p>Make sure all indexes and pipeliens are written in <strong>small caps</strong>.</p>
+</div>
 <p><img alt="" src="../images/es-file-upload-1.png"></p>
 <p><img alt="" src="../images/es-file-upload-2.png"></p>
 <p>Now, click on <strong>Override settings</strong> and then check <strong>Has header</strong> row checkbox because the example dataset has header row. Then, click close and import the data to a new Elasticsearch index and name it wa-docs-&lt;name&gt;, where &lt;name&gt; corresponds to your first name.</p>
@@ -955,12 +959,18 @@ connect every component of conversational search using its NLU model, no-code ac
 </code></pre></div>
 <p>We are now ready to build the extension in watsonx Assistant for Elasticsearch API.</p>
 <h2 id="4-set-up-the-assistant">[4] Set up the assistant</h2>
-<p>From the watsonx Assistant instance launch page, click Launch watsonx Assistant.</p>
+<p>To find your watsonx Assistant instance, go to the IBM Cloud homepage <a href="https://cloud.ibm.com/">https://cloud.ibm.com/</a>. Login with your username and make sure you are in the same account as the rest of the labs:</p>
+<p><img alt="" src="../images/wa-a.png"></p>
+<p>Click the <strong>List of resources</strong> button in the left-side menu.</p>
+<p><img alt="" src="../images/wa-b.png"></p>
+<p>Open the <strong>AI / Machine Learning</strong> section then click on the name of your <strong>watsonx Assistant instance</strong>.</p>
+<p><img alt="" src="../images/wa-c.png"></p>
+<p>From the watsonx Assistant instance launch page, click <strong>Launch watsonx Assistant</strong>.</p>
 <p><img alt="" src="../images/wa-1.png"></p>
-<p>This is a new assistant, so you will first configure the basics. First, enter its name, description, and click Next.</p>
+<p>This is a new assistant, so you will first configure the basics. First, enter its name, description, and click <strong>Next</strong>.</p>
 <p><img alt="" src="../images/wa-2.png"></p>
 <p><img alt="" src="../images/wa-3.png"></p>
-<p>Customize the assistant to your linking, then click Next and Create.</p>
+<p>Customize the assistant to your linking, then click <strong>Next</strong> and <strong>Create</strong>.</p>
 <p><img alt="" src="../images/wa-4.png"></p>
 <h2 id="5-adding-the-watsonx-discovery-semantical-search-extension">[5] Adding the watsonx Discovery Semantical Search Extension</h2>
 <p>Download the OpenAPI specification for the watsonx Discovery integration (right-click in the following link -&gt; download):</p>
