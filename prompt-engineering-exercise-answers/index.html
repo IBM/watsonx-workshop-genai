@@ -46,6 +46,12 @@
       
     
     
+      <link rel="stylesheet" href="../css/extra.css">
+    
+      <link rel="stylesheet" href="../css/csm-spgi.css">
+    
+      <link rel="stylesheet" href="../css/tables.css">
+    
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -537,20 +543,22 @@
 <p class="admonition-title">Goal</p>
 <p>Generate a marketing message with 5 sentences</p>
 </div>
-<p><strong>A possible solution</strong></p>
+<p><strong>A possible solution (English)</strong></p>
+<p><img alt="" src="../images/answer-00-zero-shot-en.png"></p>
+<p><strong>A possible solution (Spanish)</strong></p>
 <p><img alt="" src="../images/answer-00-zero-shot-es.png"></p>
 <div class="admonition info">
 <p class="admonition-title">Info</p>
-<p>Los distintos modelos pueden requerir instrucciones diferentes. En el caso de los modelos más grandes y "creativos", puede ser necesario que las instrucciones sean más explícitas. </p>
-<p>Es tentador pensar que los modelos más grandes son "más inteligentes". Hay algo de verdad en ello, pero estos modelos también pueden ser demasiado creativos. Como ha visto, puede que tenga que ser muy explícito para obtener el resultado que busca. Tenga en cuenta que la creatividad no es necesariamente un problema. Este es uno de los atractivos de la IA generativa y de los modelos fundacionales. Pero si no está intentando generar contenidos creativos (como en este ejemplo: quiere que su correo electrónico mencione los puntos específicos y no añada contenidos ficticios), quizá deba considerar un modelo más pequeño (y menos creativo) o proporcionar indicaciones más estrictas para controlar los modelos.</p>
+<p>Different models may require different instructions. In the case of larger and "creative" models, it may be necessary for the instructions to be more explicit.</p>
+<p>It's tempting to think that larger models are "smarter." There's some truth to that, but these models can also be overly creative. As you've seen, you may need to be very explicit to get the desired outcome. Keep in mind that creativity is not necessarily a problem. This is one of the appeals of generative AI and foundational models. But if you're not trying to generate creative content (as in this example: you want your email to mention specific points and not add fictional content), you might consider using a smaller (and less creative) model or providing stricter instructions to control the models.</p>
 </div>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>También puedes ver el efecto de cambiar algunos parámetros de configuración:</p>
+<p>You can also see the effect of changing some configuration parameters:</p>
 <ul>
-<li><strong>Temperatura</strong>: Cuanto mayor sea el valor, más creativo será el modelo.</li>
-<li><strong>Top P</strong>: Un valor más bajo significa menos variabilidad</li>
-<li><strong>Top K</strong>: Un valor más bajo significa menos variabilidad</li>
+<li><strong>Temperature</strong>: The higher the value, the more creative the model will be.</li>
+<li><strong>Top P</strong>: A lower value means less variability.</li>
+<li><strong>Top K</strong>: A lower value means less variability.</li>
 </ul>
 </div>
 <p><a href="../prompt-engineering-exercises/#0-zero-shot-generation">Click here to go back to this exercise</a></p>
@@ -559,11 +567,13 @@
 <p class="admonition-title">Goal</p>
 <p>Write three sentences about birds</p>
 </div>
-<p><strong>A possible solution</strong></p>
+<p><strong>A possible solution (English)</strong></p>
+<p><img alt="" src="../images/answer-list-generate-en.png"></p>
+<p><strong>A possible solution (Spanish)</strong></p>
 <p><img alt="" src="../images/answer-list-generate-es.png"></p>
 <div class="admonition info">
 <p class="admonition-title">Info</p>
-<p>Los modelos manejan los requisitos de salida de forma diferente. Algunos modelos (como los modelos de <strong>flan</strong>) son mejores con la salida de texto (al menos con la indicación zero-shot). Puede guiar la salida si actualiza el aviso con la sugerencia de una "lista". Otros modelos, como el <strong>mpt- 7b-instruct2</strong>, y en menor grado el modelo <strong>gpt-geox-20b</strong>, son más capaces de entender el concepto de salida de lista sin instrucciones adicionales.</p>
+<p>The models handle output requirements differently. Some models (like the <strong>flan</strong> models) excel with text output (at least with zero-shot prompting). You can guide the output by prompting with a "list" suggestion. Other models, such as the <strong>mpt-7b-instruct2</strong>, and to a lesser extent, the <strong>gpt-geox-20b</strong> model, are more capable of understanding the concept of list output without additional instructions.</p>
 </div>
 <p><a href="../prompt-engineering-exercises/#1-generate">Click here to go back to this exercise</a></p>
 <h2 id="2-working-with-json">2. Working with JSON</h2>
@@ -571,11 +581,13 @@
 <p class="admonition-title">Goal</p>
 <p>Generate a JSON file</p>
 </div>
-<p><strong>A possible solution</strong></p>
+<p><strong>A possible solution (English)</strong></p>
+<p><img alt="" src="../images/answer-02-JSON-en.png"></p>
+<p><strong>A possible solution (Spanish)</strong></p>
 <p><img alt="" src="../images/answer-02-JSON-es.png"></p>
 <div class="admonition info">
 <p class="admonition-title">Info</p>
-<p>Mientras que los modelos flan han demostrado una buena capacidad para generar texto en lenguaje natural, no parecen entender cómo generar una salida en formato JSON, al menos no con zero-shot. Los modelos <strong>mpt-7b-instruct2</strong> y <strong>starcoder-15.5bmodel</strong> pueden generar una buena salida JSON. Diferentes modelos son entrenados/ajustados para diferentes tareas y habilidades. Deberías buscar modelos que estén entrenados con datos específicos del dominio con un enfoque en varias estructuras de datos y capacidades. Experimente también el uso de las <strong>Stop sequences</strong> para evitar que un modelo genere texto no deseado. </p>
+<p>While flan models have shown good ability to generate text in natural language, they don't seem to understand how to generate JSON output, at least not with zero-shot prompting. The <strong>granite-13b-instruct-v2</strong> and <strong>starcoder-15.5bmodel</strong> models can generate good JSON output. Different models are trained/tailored for different tasks and abilities. You should look for models trained with domain-specific data focusing on various data structures and capabilities. Also, experiment with the use of <strong>Stop sequences</strong> to prevent a model from generating unwanted text.</p>
 </div>
 <p><a href="../prompt-engineering-exercises/#2-working-with-json">Click here to go back to this exercise</a></p>
 <h2 id="3-summarize">3. Summarize</h2>
@@ -583,7 +595,9 @@
 <p class="admonition-title">Goal</p>
 <p>Summarize one of the following short stories</p>
 </div>
-<p><strong>A possible solution</strong></p>
+<p><strong>A possible solution (English)</strong></p>
+<p><img alt="" src="../images/answer-03-sum-en.png"></p>
+<p><strong>A possible solution (Spanish)</strong></p>
 <p><img alt="" src="../images/answer-03-sum-es.png"></p>
 <p><a href="../prompt-engineering-exercises/#3-summarize">Click here to go back to this exercise</a></p>
 <h2 id="4-code">4. Code</h2>
@@ -593,10 +607,6 @@
 </div>
 <p><strong>A possible solution</strong></p>
 <p><img alt="" src="../images/answer-04-code.png"></p>
-<div class="admonition info">
-<p class="admonition-title">Info</p>
-<p>Las tareas de codificación requieren modelos básicos que comprendan la compleja estructura de salida del código. Los modelos de lenguaje natural como la familia de modelos flan, no funcionan bien para los casos de uso de generación y traducción de código. El mejor modelo para estas tareas dentro de la biblioteca de IBM es el modelo <strong>starcoder-15.5b</strong>. Funciona bien en ambos tipos de tareas (generación de código y traducción de código). Sin embargo, para la generación de código, es necesario realizar one-shot para guiar al modelo hacia la salida deseada.</p>
-</div>
 <p><a href="../prompt-engineering-exercises/#4-code">Click here to go back to this exercise</a></p></div>
 
 

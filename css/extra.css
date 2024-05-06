@@ -1,0 +1,18 @@
+.md-grid {
+  max-width: none;
+  margin-left: 0px;
+}
+.md-sidebar--primary {
+  width: 12rem;
+}
+.md-sidebar--secondary {
+  width: 18rem;
+}
+
+.md-sidebar--secondary .md-sidebar__inner {
+  padding-right: 2px;
+}
+
+.md-typeset .admonition {
+  font-size: .75rem;
+}
