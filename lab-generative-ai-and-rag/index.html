@@ -461,9 +461,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#6-upload-and-configure-the-watsonx-actions" class="md-nav__link">
+  <a href="#7-upload-and-configure-the-watsonx-actions" class="md-nav__link">
     <span class="md-ellipsis">
-      [6] Upload and configure the watsonx actions
+      [7] Upload and configure the watsonx actions
     </span>
   </a>
   
@@ -676,9 +676,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#6-upload-and-configure-the-watsonx-actions" class="md-nav__link">
+  <a href="#7-upload-and-configure-the-watsonx-actions" class="md-nav__link">
     <span class="md-ellipsis">
-      [6] Upload and configure the watsonx actions
+      [7] Upload and configure the watsonx actions
     </span>
   </a>
   
@@ -826,10 +826,10 @@ connect every component of conversational search using its NLU model, no-code ac
 <p><img alt="" src="../images/api_key_creation-3.png"></p>
 <h2 id="3-load-data-into-watsonx-discovery">[3] Load data into watsonx Discovery</h2>
 <p>Up until now, Watson Discovery was the service used for the creation of the Corporate Knowledge Base and the “Search and Retrieval” phase of the conversational search integration. If you recall from the theory part of this course, this method corresponds to lexical search, since we are searching for lexical similarities in the stored documents.</p>
-<p>In this part of the laboratory, we want to make use of sematic search (instead of lexical) by connecting our current virtual agent with a vectorial database and retrieving the results based on the context and similarity of the passages instead of the traditional method used by Watson Discovery.</p>
-<p>For this reason, we are going to make use of the OpenAPI functionality to build our custom extension towards an ElasticSearch model. This model is known as ELSERv2 and has already been deployed to in an Elasticsearch service. In order to see where this ElasticSearch model is, open Elastic <a href="https://elasticsearch-kibana-elastic.apps.65e9b74cf3e1220011745c89.cloud.techzone.ibm.com/app/home#/">URL</a> in a browser, authenticate with the following credentials:</p>
+<p>In this part of the laboratory, we want to make use of sematic search (instead of lexical) by connecting our current virtual agent with a vectorial database and retrieving the results based on the context and similarity of the passages instead of the traditional method used by Watson Discovery.Bastion password: y</p>
+<p>For this reason, we are going to make use of the OpenAPI functionality to build our custom extension towards an ElasticSearch model. This model is known as ELSERv2 and has already been deployed to in an Elasticsearch service. In order to see where this ElasticSearch model is, open Elastic <a href="https://elasticsearch-kibana-elastic.apps.667ac5d78dc418001f3fc3b8.cloud.techzone.ibm.com">URL</a> in a browser, authenticate with the following credentials:</p>
 <p>→   Username: elastic</p>
-<p>→   Password: J3723QrU9lX7Eld2E99NRT5D</p>
+<p>→   Password: l6Weh2QnnoqDM47662u6Q66r</p>
 <p>Then, go to <strong>Machine Learning</strong> and click on <strong>Trained Models</strong>.</p>
 <p><img alt="" src="../images/es-trained-models-1.png"></p>
 <p><img alt="" src="../images/es-trained-models-2.png"></p>
@@ -855,12 +855,12 @@ connect every component of conversational search using its NLU model, no-code ac
 <p>Note that you can copy the commands in this page by clicking the copy button in each code box:</p>
 <p><img alt="" src="../images/copy-button.png"></p>
 </div>
-<p>Bastion password: ylGytzYJ</p>
-<div class="copy highlight"><pre><span></span><code>ssh<span class="w"> </span>admin@api.65e9b74cf3e1220011745c89.cloud.techzone.ibm.com<span class="w"> </span>-p<span class="w"> </span><span class="m">40222</span>
+<p>Bastion password: snf5ebgW</p>
+<div class="copy highlight"><pre><span></span><code>ssh<span class="w"> </span>admin@api.667ac5d78dc418001f3fc3b8.cloud.techzone.ibm.com<span class="w"> </span>-p<span class="w"> </span><span class="m">40222</span>
 </code></pre></div>
-<div class="copy highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">ES_URL</span><span class="o">=</span>https://elasticsearch-elastic.apps.65e9b74cf3e1220011745c89.cloud.techzone.ibm.com:443
+<div class="copy highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">ES_URL</span><span class="o">=</span>https://elasticsearch-elastic.apps.667ac5d78dc418001f3fc3b8.cloud.techzone.ibm.com:443
 <span class="nb">export</span><span class="w"> </span><span class="nv">ES_USER</span><span class="o">=</span>elastic
-<span class="nb">export</span><span class="w"> </span><span class="nv">ES_PASSWORD</span><span class="o">=</span>J3723QrU9lX7Eld2E99NRT5D
+<span class="nb">export</span><span class="w"> </span><span class="nv">ES_PASSWORD</span><span class="o">=</span>l6Weh2QnnoqDM47662u6Q66r
 </code></pre></div>
 <p>Now, execute the following curl. Please edit the URL so that search-wa-docs-&lt;name&gt; contains your first name. </p>
 <div class="copy highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>PUT<span class="w"> </span><span class="s2">"</span><span class="si">${</span><span class="nv">ES_URL</span><span class="si">}</span><span class="s2">/search-wa-docs-&lt;NAME&gt;?pretty"</span><span class="w"> </span>-u<span class="w"> </span><span class="s2">"</span><span class="si">${</span><span class="nv">ES_USER</span><span class="si">}</span><span class="s2">:</span><span class="si">${</span><span class="nv">ES_PASSWORD</span><span class="si">}</span><span class="s2">"</span><span class="w"> </span><span class="se">\</span>
@@ -1002,8 +1002,8 @@ connect every component of conversational search using its NLU model, no-code ac
 <ul>
 <li>Authentication type: Basic Auth</li>
 <li>Username: elastic</li>
-<li>Password: J3723QrU9lX7Eld2E99NRT5D</li>
-<li>elastic_url: elasticsearch-elastic.apps.65e9b74cf3e1220011745c89.cloud.techzone.ibm.com:443</li>
+<li>Password: l6Weh2QnnoqDM47662u6Q66r</li>
+<li>elastic_url: elasticsearch-elastic.apps.667ac5d78dc418001f3fc3b8.cloud.techzone.ibm.com:443</li>
 </ul>
 <p><img alt="" src="../images/watsonx_discovery_extension-9.png"></p>
 <p>Click <strong>Next</strong> and the <strong>Finish</strong>.</p>
@@ -1040,7 +1040,7 @@ connect every component of conversational search using its NLU model, no-code ac
 •   Click Next.</p>
 <p><img alt="" src="../images/watsonx_ai_extension-7.png"></p>
 <p>Click <strong>Finish</strong> and <strong>Close</strong> on the final review screen.</p>
-<h2 id="6-upload-and-configure-the-watsonx-actions">[6] Upload and configure the watsonx actions</h2>
+<h2 id="7-upload-and-configure-the-watsonx-actions">[7] Upload and configure the watsonx actions</h2>
 <p>Next, you will upload the actions your assistant will need, so download the actions JSON file.</p>
 <p><strong>Note:</strong> You should not upload these actions directly into an existing assistant because doing so will overwrite your existing actions.</p>
 <p>The actions in this file will use search only when no action matches the user request. They search a complete watsonx project, and as such they are general-purpose and usable with any data set.</p>
